@@ -15,6 +15,7 @@ class LoginViewModel: ObservableObject {
     var isValid = false
     
     private var cancellable = Set<AnyCancellable>()
+    private var loginRepo : LoginRepositoryInputProtocol = LoginRepoWithDB(client: LoginServiceClient(), storage: LoginStorage(storage: RealmContextManager()))
 
     init(){
          Publishers.CombineLatest($username, $password)
@@ -24,6 +25,6 @@ class LoginViewModel: ObservableObject {
     }
     
     func login() {
-        //API call
+     
     }
 }

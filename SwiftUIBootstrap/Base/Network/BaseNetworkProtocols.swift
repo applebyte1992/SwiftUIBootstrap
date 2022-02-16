@@ -115,3 +115,7 @@ extension String {
     static let HTTPPost = "POST"
     static let HTTPPut = "PUT"
 }
+
+
+protocol BaseNetworkServiceClient : class { }
+extension BaseNetworkServiceClient { }
