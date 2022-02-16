@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  LoginView.swift
 //  SwiftUIBootstrap
 //
 //  Created by Masroor Elahi on 15/02/2022.
@@ -7,15 +7,14 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct LoginView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        Text("Yummy")
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        LoginView()
     }
 }
