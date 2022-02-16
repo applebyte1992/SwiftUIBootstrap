@@ -6,3 +6,24 @@
 //
 
 import Foundation
+import Combine
+
+class LoginViewModel: ObservableObject {
+    
+    @Published var username = ""
+    @Published var password = ""
+    var isValid = false
+    
+    private var cancellable = Set<AnyCancellable>()
+
+    init(){
+         Publishers.CombineLatest($username, $password)
+            .map { $0.count > 0 && $1.count > 0 }
+            .assign(to: \.isValid, on: self)
+            .store(in: &cancellable)
+    }
+    
+    func login() {
+        //API call
+    }
+}
