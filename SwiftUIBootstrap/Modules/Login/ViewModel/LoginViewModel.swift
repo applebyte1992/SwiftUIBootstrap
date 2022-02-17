@@ -14,6 +14,8 @@ class LoginViewModel: ObservableObject {
     @Published var password = ""
     var isValid = false
     
+    var abc = PassthroughSubject<User,NetworkError>()
+    
     private var cancellable = Set<AnyCancellable>()
     private var loginRepo : LoginRepositoryInputProtocol = LoginRepository(client: LoginServiceClient(), storage: LoginStorage(storage: RealmContextManager()))
 
@@ -25,6 +27,29 @@ class LoginViewModel: ObservableObject {
     }
     
     func login() {
-        loginRepo.loginUser()
+//
+//        loginRepo.loginUser()
+//        loginRepo.loginUser3().sink { err in
+//            switch err {
+//            case .finished: break;
+//            case .failure(let err):
+//                print(err);
+//            }
+//
+//        } receiveValue: { user in
+//            print(user)
+//        }
+        
+        loginRepo.loginUser4(publisher: abc)
+        
+        abc.sink { error in
+            print(error)
+        } receiveValue: { user in
+            print(user)
+        }.store(in: &cancellable)
+
+            
     }
 }
+
+

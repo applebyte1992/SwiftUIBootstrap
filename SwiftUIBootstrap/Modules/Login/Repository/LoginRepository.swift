@@ -7,14 +7,20 @@
 
 import Foundation
 import Combine
+import RealmSwift
 
 
 protocol LoginRepositoryInputProtocol  {
     func loginUser()
+    func loginUser2() -> AnyPublisher<UserResponse,NetworkError>
+    func loginUser3() -> Future<User?,NetworkError>
+    
+    func loginUser4(publisher : PassthroughSubject<User,NetworkError>)
 }
 
 
 class LoginRepository<N:LoginServiceClientProtocol , S:LoginStorageProtocol> : BaseRepositoryStorage<S,N> , LoginRepositoryInputProtocol {
+   
     
     var subscriptions: Set<AnyCancellable> = []
     
@@ -26,18 +32,41 @@ class LoginRepository<N:LoginServiceClientProtocol , S:LoginStorageProtocol> : B
         
     }
     
-    func login2() {
-        self.client.loginService()
-            .sink { completed in
+    func loginUser2() -> AnyPublisher<UserResponse,NetworkError> {
+        return Future { promise in
+            self.client.loginService().sink { completed in
                 switch completed {
                 case .finished: break
                 case .failure(let err):
-                    print(err)
+                    promise(.failure(err))
                 }
-            } receiveValue: { d1 in
-                print(d1)
-            }
+            } receiveValue: { response in
+                promise(.success(response))
+            }.store(in: &self.subscriptions)
+        }.eraseToAnyPublisher()
     }
+    
+    func loginUser3() -> Future<User?,NetworkError> {
+        return Future { promise in
+            self.client.loginService().sink { completed in
+                switch completed {
+                case .finished: break
+                case .failure(let err):
+                    promise(.failure(err))
+                }
+            } receiveValue: { response in
+                promise(.success(response.user))
+            }.store(in: &self.subscriptions)
+        }
+    }
+    
+    func loginUser4(publisher: PassthroughSubject<User, NetworkError>) {
+        self.client.loginService()
+            .sink { publisher.send(completion: $0)} receiveValue: {
+                publisher.send($0.user!)
+            }.store(in: &subscriptions)
+    }
+    
     
 }
 
