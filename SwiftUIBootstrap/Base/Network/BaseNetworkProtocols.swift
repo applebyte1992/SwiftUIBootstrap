@@ -33,6 +33,10 @@ extension BaseServerInfo {
     }
 }
 
+protocol BaseNetworkServiceClient : AnyObject { }
+
+extension BaseNetworkServiceClient { }
+
 
 //Network Endpoint Protocols
 protocol BaseNetworkEndpoint {
@@ -84,38 +88,3 @@ protocol BaseNetworkService: AnyObject {
     func fetch<T: Codable>(_ target: Target, completion: @escaping (T? , Error?) -> Void) -> AnyPublisher<T, NetworkError>
 }
 
-
-protocol AlamofireEndpoint: BaseNetworkEndpoint {
-
-    /// The HTTP method used in the request.
-    var method: HTTPMethod { get }
-
-    /// The encoding defining how to send the parameters
-    var encoding: ParameterEncoding { get }
-
-    var requestInterceptor : RequestInterceptor? { get }
-    
-}
-
-extension AlamofireEndpoint {
-
-    /// Wrapping HTTP method
-    public var method: HTTPMethod { return HTTPMethod(rawValue: httpMethod) }
-    /// Default value for Parameters encoding depends on the HTTP Method
-    public var encoding: ParameterEncoding { return URLEncoding.default }
-    
-    public var requestAdapt : RequestAdapter? { return nil }
-    
-    public var requestRetrier : RequestRetrier? { return nil }
-
-}
-
-extension String {
-    static let HTTPGet = "GET"
-    static let HTTPPost = "POST"
-    static let HTTPPut = "PUT"
-}
-
-
-protocol BaseNetworkServiceClient : class { }
-extension BaseNetworkServiceClient { }

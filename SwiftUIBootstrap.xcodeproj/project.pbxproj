@@ -15,6 +15,8 @@
 		4740921727BD5D3700BD5BF4 /* Envoirnment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4740921627BD5D3700BD5BF4 /* Envoirnment.swift */; };
 		4740921A27BD5E8400BD5BF4 /* BaseDatabaseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4740921927BD5E8400BD5BF4 /* BaseDatabaseStorage.swift */; };
 		4740921C27BD64FC00BD5BF4 /* RealmContextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4740921B27BD64FC00BD5BF4 /* RealmContextManager.swift */; };
+		4740921E27BE48B800BD5BF4 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4740921D27BE48B800BD5BF4 /* StringExtensions.swift */; };
+		4740922227BE48FD00BD5BF4 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4740922127BE48FD00BD5BF4 /* AppError.swift */; };
 		4756C1A727BBD4D2005350E7 /* SwiftUIBootstrapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4756C1A627BBD4D2005350E7 /* SwiftUIBootstrapApp.swift */; };
 		4756C1AB27BBD4D6005350E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4756C1AA27BBD4D6005350E7 /* Assets.xcassets */; };
 		4756C1AE27BBD4D6005350E7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4756C1AD27BBD4D6005350E7 /* Preview Assets.xcassets */; };
@@ -59,6 +61,8 @@
 		4740921627BD5D3700BD5BF4 /* Envoirnment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Envoirnment.swift; sourceTree = "<group>"; };
 		4740921927BD5E8400BD5BF4 /* BaseDatabaseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDatabaseStorage.swift; sourceTree = "<group>"; };
 		4740921B27BD64FC00BD5BF4 /* RealmContextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmContextManager.swift; sourceTree = "<group>"; };
+		4740921D27BE48B800BD5BF4 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		4740922127BE48FD00BD5BF4 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		4756C1A327BBD4D2005350E7 /* SwiftUIBootstrap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIBootstrap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4756C1A627BBD4D2005350E7 /* SwiftUIBootstrapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIBootstrapApp.swift; sourceTree = "<group>"; };
 		4756C1AA27BBD4D6005350E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -141,6 +145,25 @@
 			path = Configurations;
 			sourceTree = "<group>";
 		};
+		4740921F27BE48BE00BD5BF4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4740921D27BE48B800BD5BF4 /* StringExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4740922027BE48E200BD5BF4 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				4740921427BD3ADD00BD5BF4 /* BaseStorageProtocols.swift */,
+				4740921227BD3AC300BD5BF4 /* BaseRepositoryProtocols.swift */,
+				4740921927BD5E8400BD5BF4 /* BaseDatabaseStorage.swift */,
+				4740921B27BD64FC00BD5BF4 /* RealmContextManager.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 		4756C19A27BBD4D1005350E7 = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +192,7 @@
 				4756C1A627BBD4D2005350E7 /* SwiftUIBootstrapApp.swift */,
 				47E8C33F27BC19A7005E2315 /* AppDelegate.swift */,
 				47E8C34A27BC1AB3005E2315 /* Base */,
+				4740921F27BE48BE00BD5BF4 /* Extensions */,
 				4740921827BD5D4000BD5BF4 /* Configurations */,
 				47E8C33B27BC1536005E2315 /* Modules */,
 				4756C1AA27BBD4D6005350E7 /* Assets.xcassets */,
@@ -249,6 +273,7 @@
 		47E8C34A27BC1AB3005E2315 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				4740922027BE48E200BD5BF4 /* Database */,
 				47E8C34B27BC1ABA005E2315 /* Network */,
 			);
 			path = Base;
@@ -259,10 +284,7 @@
 			children = (
 				47E8C34827BC1AAB005E2315 /* BaseNetworkProtocols.swift */,
 				4740920C27BD016900BD5BF4 /* AlamofireServiceProvider.swift */,
-				4740921227BD3AC300BD5BF4 /* BaseRepositoryProtocols.swift */,
-				4740921427BD3ADD00BD5BF4 /* BaseStorageProtocols.swift */,
-				4740921927BD5E8400BD5BF4 /* BaseDatabaseStorage.swift */,
-				4740921B27BD64FC00BD5BF4 /* RealmContextManager.swift */,
+				4740922127BE48FD00BD5BF4 /* AppError.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -509,6 +531,7 @@
 				4740921127BD3A7300BD5BF4 /* LoginStorage.swift in Sources */,
 				4740921A27BD5E8400BD5BF4 /* BaseDatabaseStorage.swift in Sources */,
 				47E8C34627BC1A3B005E2315 /* LoginRepository.swift in Sources */,
+				4740922227BE48FD00BD5BF4 /* AppError.swift in Sources */,
 				47E8C34327BC1A23005E2315 /* LoginViewModel.swift in Sources */,
 				47E8C34027BC19A7005E2315 /* AppDelegate.swift in Sources */,
 				4740921727BD5D3700BD5BF4 /* Envoirnment.swift in Sources */,
@@ -517,6 +540,7 @@
 				4756C1A727BBD4D2005350E7 /* SwiftUIBootstrapApp.swift in Sources */,
 				4740920D27BD016900BD5BF4 /* AlamofireServiceProvider.swift in Sources */,
 				4740921C27BD64FC00BD5BF4 /* RealmContextManager.swift in Sources */,
+				4740921E27BE48B800BD5BF4 /* StringExtensions.swift in Sources */,
 				4740921527BD3ADD00BD5BF4 /* BaseStorageProtocols.swift in Sources */,
 				4740920F27BD390B00BD5BF4 /* LoginService.swift in Sources */,
 			);
