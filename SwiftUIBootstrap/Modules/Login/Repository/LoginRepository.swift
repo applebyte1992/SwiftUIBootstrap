@@ -36,7 +36,7 @@ class LoginRepository<N:LoginServiceClientProtocol , S:LoginStorageProtocol> : B
                 }
             } receiveValue: { d1 in
                 print(d1)
-            }.store(in: &subscriptions)
+            }
     }
     
 }

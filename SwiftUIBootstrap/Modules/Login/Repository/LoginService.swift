@@ -14,9 +14,6 @@ import Combine
 public enum LoginService {
     /// Endpoint for the API:
     case authenticate
-    case signUp
-    case forgotPassword
-    
 }
 
 /// Implementation of the Endpoint protocol for Token Service
