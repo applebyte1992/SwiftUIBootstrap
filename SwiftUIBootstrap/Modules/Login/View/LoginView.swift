@@ -25,7 +25,7 @@ struct LoginView: View {
                         .keyboardType(.emailAddress)
                     SecureField("Password", text: $loginViewModel.password)
                     Button("Log in") {
-                        
+                        loginViewModel.login()
                     }
                     .disabled(!loginViewModel.isValid)
                     .padding(20)

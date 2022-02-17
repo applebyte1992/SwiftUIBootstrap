@@ -44,6 +44,7 @@ extension AlamofireEndpoint {
 class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
     
     
+    
     public var config: URLSessionConfiguration? {
         didSet {
             if let config = config {
@@ -59,7 +60,7 @@ class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
         self.manager = Session(configuration: config)
     }
     
-    func fetch<T>(_ target: Target, completion: @escaping (T?, Error?) -> Void) -> AnyPublisher<T, NetworkError> where T : Decodable, T : Encodable {
+    func fetch<T>(_ target: Target) -> AnyPublisher<T, NetworkError> where T : Decodable, T : Encodable {
         guard let url = target.endPoint else {
             return Fail(error: NetworkError.init(initialError: AFError.invalidURL(url: ""), backendError: nil)).eraseToAnyPublisher()
         }
@@ -85,7 +86,7 @@ class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
         
         return manager.request(url, method: method, parameters: params, encoding: encoding, headers: httpHeaders, interceptor: requestInterceptor)
             .validate()
-            .publishDecodable(type: T.self , emptyResponseCodes: [200])
+            .publishDecodable(type: T.self , emptyResponseCodes: [200, 204, 205])
             .value()
             .mapError({err in NetworkError(initialError: err, backendError: nil)})
             .receive(on: DispatchQueue.main)
@@ -98,12 +99,4 @@ struct EmptyResponse : Codable {
     
 }
 
-extension Decodable {
-
-    /// Try to deserialize directly from JSON data
-    static func decode(data: Data) -> Self? {
-        let decoder = JSONDecoder()
-        return try? decoder.decode(Self.self, from: data)
-    }
-}
 

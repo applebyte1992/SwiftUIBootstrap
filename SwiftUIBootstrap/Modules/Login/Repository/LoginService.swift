@@ -7,13 +7,15 @@
 
 import Foundation
 import Alamofire
-
+import Combine
 
 
 /// Defines the endpoints available for the Authentication API
 public enum LoginService {
     /// Endpoint for the API:
     case authenticate
+    case signUp
+    case forgotPassword
     
 }
 
@@ -33,8 +35,7 @@ extension LoginService: AlamofireEndpoint {
     
     var path: String {
         switch self {
-        case .authenticate: return "/api/login"
-            
+        case .authenticate: return "/users/2"
         }
     }
     
@@ -52,31 +53,24 @@ extension LoginService: AlamofireEndpoint {
     
     //Default Headers is ["Content-type": "application/json"]
     public var headers: Headers? {
-        return ["Content-Type" : "application/x-www-form-urlencoded"]
+        return ["Content-type": "application/json"]
     }
 }
 
 protocol LoginServiceClientProtocol : BaseNetworkServiceClient {
-//    func loginUser(request : LoginRequestModel , completion: @escaping ((User?, Error?) -> Void))
-    func loginService()
+    func loginService() -> AnyPublisher<UserResponse, NetworkError>
 }
 
 /// API Client for the Authentication API
 class LoginServiceClient : AlamofireProvider<LoginService> , LoginServiceClientProtocol {
     
-    
-    
     init() {
         super.init()
     }
     
-    func loginService() {
-        
+    func loginService() -> AnyPublisher<UserResponse, NetworkError>  {
+        return super.fetch(.authenticate)
     }
-    
-    /// Get an access token by providing user credentials
-//    func loginUser(request : LoginRequestModel , completion: @escaping ((User?, Error?) -> Void)) {
-//        _ = fetch(.authenticate(userRequest : request), completion: completion)
-//    }
+
 
 }

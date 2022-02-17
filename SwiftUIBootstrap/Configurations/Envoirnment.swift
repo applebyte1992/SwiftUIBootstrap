@@ -15,6 +15,6 @@ class LoginServer : BaseServerInfo {
     }
     
     var baseURL: String {
-        return "https://www.google.com/?client=safari"
+        return "https://reqres.in/api"
     }
 }

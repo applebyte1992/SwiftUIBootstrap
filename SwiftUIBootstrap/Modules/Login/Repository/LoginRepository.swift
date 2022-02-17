@@ -6,21 +6,39 @@
 //
 
 import Foundation
+import Combine
+
 
 protocol LoginRepositoryInputProtocol  {
-    func loadUserInformation()
+    func loginUser()
 }
 
-class LoginRepository<N:LoginServiceClientProtocol> : BaseRepository<N> , LoginRepositoryInputProtocol {
-    func loadUserInformation() {
+
+class LoginRepository<N:LoginServiceClientProtocol , S:LoginStorageProtocol> : BaseRepositoryStorage<S,N> , LoginRepositoryInputProtocol {
+    
+    var subscriptions: Set<AnyCancellable> = []
+    
+    func loginUser() {
         self.client.loginService()
+            .sink { print ("completion: \($0)") } receiveValue: {
+                print("Value : \($0)")
+            }.store(in: &subscriptions)
+        
     }
-}
-
-
-class LoginRepoWithDB<N:LoginServiceClientProtocol , S:LoginStorageProtocol> : BaseRepositoryStorage<S,N> , LoginRepositoryInputProtocol {
-    func loadUserInformation() {
+    
+    func login2() {
         self.client.loginService()
-        self.storage.saveUserInformation()
+            .sink { completed in
+                switch completed {
+                case .finished: break
+                case .failure(let err):
+                    print(err)
+                }
+            } receiveValue: { d1 in
+                print(d1)
+            }.store(in: &subscriptions)
     }
+    
 }
+
+

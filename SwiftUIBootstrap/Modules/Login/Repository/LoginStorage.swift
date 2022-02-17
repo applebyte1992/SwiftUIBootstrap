@@ -12,11 +12,14 @@ protocol LoginStorageProtocol : BaseStorageClient {
     func saveUserInformation()
 }
 
+
+var abc = LoginStorage(storage: RealmContextManager())
+
 class LoginStorage : BaseDatabaseStorage , LoginStorageProtocol {
     func saveUserInformation() {
-//        self.storage?.save(object: <#T##Storable#>)
         print("Save")
     }
-    
-    
 }
+
+
+
