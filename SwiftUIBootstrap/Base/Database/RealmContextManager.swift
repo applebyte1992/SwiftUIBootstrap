@@ -13,6 +13,7 @@ import RealmSwift
 
 enum RealmError: Error {
     case eitherRealmIsNilOrNotRealmSpecificModel
+    case realmException(String)
 }
 
 extension RealmError: LocalizedError {
@@ -20,10 +21,16 @@ extension RealmError: LocalizedError {
         switch self {
         case .eitherRealmIsNilOrNotRealmSpecificModel:
             return "Realm not found"
+        case .realmException(let error):
+            return error
         }
     }
+    
+    var asAppError : AppError {
+        return AppError.buildDatabaseError(databaseError: self)
+    }
+    
 }
-
 
 class RealmContextManager: BaseStorageContext {
     
@@ -40,12 +47,12 @@ class RealmContextManager: BaseStorageContext {
     static func prepareDefaultRealm() {
         
         let config = Realm.Configuration(
-        schemaVersion: 1,
-        migrationBlock: { migration, oldSchemaVersion in
-            if (oldSchemaVersion < 1) {
-                
-            }
-        })
+            schemaVersion: 1,
+            migrationBlock: { migration, oldSchemaVersion in
+                if (oldSchemaVersion < 1) {
+                    
+                }
+            })
         
         Realm.Configuration.defaultConfiguration = config
         tryRealmObject()
@@ -81,12 +88,17 @@ class RealmContextManager: BaseStorageContext {
         guard let object = object as? Object else {
             return
         }
-        try realm.write {
-            realm.add(object)
+        do {
+            try realm.write {
+                realm.add(object)
+            }
+        } catch let ex {
+            throw RealmError.realmException(ex.localizedDescription).asAppError
         }
-        #if DEBUG
+        
+#if DEBUG
         print(realm.configuration.fileURL ?? "")
-        #endif
+#endif
         
     }
     
@@ -95,13 +107,16 @@ class RealmContextManager: BaseStorageContext {
             throw RealmError.eitherRealmIsNilOrNotRealmSpecificModel
         }
         
-        #if DEBUG
+#if DEBUG
         print(realm.configuration.fileURL ?? "")
-        #endif
-        try realm.write {
-            block()
+#endif
+        do {
+            try realm.write {
+                block()
+            }
+        } catch let ex {
+            throw RealmError.realmException(ex.localizedDescription).asAppError
         }
-        
     }
     
     func delete(object: Storable) throws {
@@ -112,9 +127,13 @@ class RealmContextManager: BaseStorageContext {
         guard let object = object as? Object else {
             return
         }
-        try realm.write {
-            
-            realm.delete(object)
+        do {
+            try realm.write {
+                realm.delete(object)
+            }
+        }
+        catch let ex {
+            throw RealmError.realmException(ex.localizedDescription).asAppError
         }
     }
     
@@ -122,14 +141,18 @@ class RealmContextManager: BaseStorageContext {
         guard let realm = self.realm else {
             throw RealmError.eitherRealmIsNilOrNotRealmSpecificModel
         }
-        
-        try realm.write {
-            guard let castType = model as? Object.Type else {
-                return
+        do {
+            try realm.write {
+                guard let castType = model as? Object.Type else {
+                    return
+                }
+                let allNotifications = realm.objects(castType)
+                realm.delete(allNotifications)
             }
-            let allNotifications = realm.objects(castType)
-            realm.delete(allNotifications)
+        } catch let ex {
+            throw RealmError.realmException(ex.localizedDescription).asAppError
         }
+        
     }
     
     func fetch<T>(_ model: T.Type, predicate: NSPredicate?, sorted: Sorted?, completion: (([T]) -> Void)) where T: Storable {
@@ -137,7 +160,7 @@ class RealmContextManager: BaseStorageContext {
             guard let realm = self.realm else {
                 throw RealmError.eitherRealmIsNilOrNotRealmSpecificModel
             }
-        
+            
             guard let castType = model as? Object.Type else {
                 return
             }
@@ -159,15 +182,20 @@ class RealmContextManager: BaseStorageContext {
         guard let realm = self.realm else {
             throw RealmError.eitherRealmIsNilOrNotRealmSpecificModel
         }
-
+        
         let mappedList = list.map({$0 as! Object})
-
-        try realm.write {
-            realm.add(mappedList , update: .all)
+        
+        do {
+            try realm.write {
+                realm.add(mappedList , update: .all)
+            }
         }
-        #if DEBUG
+        catch let ex {
+            throw RealmError.realmException(ex.localizedDescription).asAppError
+        }
+#if DEBUG
         print(realm.configuration.fileURL ?? "")
-        #endif
+#endif
     }
     
     func delete(list: [Storable]) throws {
@@ -176,19 +204,26 @@ class RealmContextManager: BaseStorageContext {
         }
         
         let mappedList = list.map({$0 as! Object})
-        try realm.write {
-            realm.delete(mappedList)
+        do {
+            try realm.write {
+                realm.delete(mappedList)
+            }
         }
-        #if DEBUG
+        catch let ex {
+            throw RealmError.realmException(ex.localizedDescription).asAppError
+        }
+        
+#if DEBUG
         print(realm.configuration.fileURL ?? "")
-        #endif
+#endif
     }
     
     func create<T>(_ model: T.Type, updates: Any?, completion: @escaping ((T) -> Void)) throws where T : Storable {
         
     }
     
-
+    
+    
 }
 
 
@@ -256,7 +291,7 @@ extension List: DetachableObject {
         let result = List<Element>()
         forEach {
             if let detachableObject = $0 as? DetachableObject,
-                let element = detachableObject.detached() as? Element {
+               let element = detachableObject.detached() as? Element {
                 result.append(element)
             } else { // Then it is a primitive
                 result.append($0)
@@ -277,4 +312,4 @@ extension Array where Element : DetachableObject {
 }
 
 
-extension Object : Storable { }
+extension Object : Storable  { }

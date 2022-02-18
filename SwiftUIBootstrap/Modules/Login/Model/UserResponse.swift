@@ -12,7 +12,7 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 */
 
 import Foundation
-struct UserResponse : Codable {
+class UserResponse : Codable {
 	let user : User?
 	let support : Support?
 
@@ -21,7 +21,7 @@ struct UserResponse : Codable {
 		case support
 	}
 
-	init(from decoder: Decoder) throws {
+	required init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		user = try values.decodeIfPresent(User.self, forKey: .user)
 		support = try values.decodeIfPresent(Support.self, forKey: .support)

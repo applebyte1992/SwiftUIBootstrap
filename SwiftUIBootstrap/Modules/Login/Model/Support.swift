@@ -12,16 +12,18 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 */
 
 import Foundation
-struct Support : Codable {
-	let url : String?
-	let text : String?
+import RealmSwift
+
+class Support : Codable {
+	var url : String?
+    var text : String?
 
 	enum CodingKeys: String, CodingKey {
 		case url
 		case text
 	}
-
-	init(from decoder: Decoder) throws {
+ 
+    required init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		url = try values.decodeIfPresent(String.self, forKey: .url)
 		text = try values.decodeIfPresent(String.self, forKey: .text)

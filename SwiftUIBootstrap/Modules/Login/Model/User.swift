@@ -12,12 +12,14 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 */
 
 import Foundation
-struct User : Codable {
-	let id : Int?
-	let email : String?
-	let firstName : String?
-	let lastName : String?
-	let avatar : String?
+import RealmSwift
+
+class User : Object , Codable {
+    @Persisted var id : Int?
+    @Persisted var email : String?
+    @Persisted var firstName : String?
+    @Persisted var lastName : String?
+    @Persisted var  avatar : String?
 
 	enum CodingKeys: String, CodingKey {
 		case id
@@ -26,8 +28,12 @@ struct User : Codable {
 		case lastName = "last_name"
 		case avatar
 	}
+    
+    override init() {
+        
+    }
 
-	init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		id = try values.decodeIfPresent(Int.self, forKey: .id)
 		email = try values.decodeIfPresent(String.self, forKey: .email)

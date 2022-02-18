@@ -14,12 +14,13 @@ class LoginViewModel: ObservableObject {
     @Published var password = ""
     var isValid = false
     
-    var abc = PassthroughSubject<User,NetworkError>()
+    var userPublisher = PassthroughSubject<User,AppError>()
     
     private var cancellable = Set<AnyCancellable>()
-    private var loginRepo : LoginRepositoryInputProtocol = LoginRepository(client: LoginServiceClient(), storage: LoginStorage(storage: RealmContextManager()))
-
-    init(){
+    private var loginRepo : LoginRepositoryInputProtocol
+    
+    init(loginRepo : LoginRepositoryInputProtocol = LoginRepository(client: LoginServiceClient(), storage: UserStorage(storage: RealmContextManager()))){
+        self.loginRepo = loginRepo
          Publishers.CombineLatest($username, $password)
             .map { $0.count > 0 && $1.count > 0 }
             .assign(to: \.isValid, on: self)
@@ -27,28 +28,12 @@ class LoginViewModel: ObservableObject {
     }
     
     func login() {
-//
-//        loginRepo.loginUser()
-//        loginRepo.loginUser3().sink { err in
-//            switch err {
-//            case .finished: break;
-//            case .failure(let err):
-//                print(err);
-//            }
-//
-//        } receiveValue: { user in
-//            print(user)
-//        }
-        
-        loginRepo.loginUser4(publisher: abc)
-        
-        abc.sink { error in
+        loginRepo.loginUser(publisher: userPublisher)
+        userPublisher.sink { error in
             print(error)
         } receiveValue: { user in
             print(user)
         }.store(in: &cancellable)
-
-            
     }
 }
 

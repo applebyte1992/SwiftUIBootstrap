@@ -37,13 +37,7 @@ extension AlamofireEndpoint {
 
 }
 
-
-
-
-
 class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
-    
-    
     
     public var config: URLSessionConfiguration? {
         didSet {
@@ -60,9 +54,9 @@ class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
         self.manager = Session(configuration: config)
     }
     
-    func fetch<T>(_ target: Target) -> AnyPublisher<T, NetworkError> where T : Decodable, T : Encodable {
+    func fetch<T>(_ target: Target) -> AnyPublisher<T, AppError> where T : Decodable, T : Encodable {
         guard let url = target.endPoint else {
-            return Fail(error: NetworkError.init(initialError: AFError.invalidURL(url: ""), backendError: nil)).eraseToAnyPublisher()
+            return Fail(error: AppError.buildNetworkError(networkError: NetworkError.init(message: GeneralNetworkError.invalidURL))).eraseToAnyPublisher()
         }
         //Paramters
         let params: Parameters? = target.parameters
@@ -88,7 +82,9 @@ class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
             .validate()
             .publishDecodable(type: T.self , emptyResponseCodes: [200, 204, 205])
             .value()
-            .mapError({err in NetworkError(initialError: err, backendError: nil)})
+            .mapError({ err in
+                AppError.buildNetworkError(networkError: NetworkError.init(alamofireError: err))
+            })
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
