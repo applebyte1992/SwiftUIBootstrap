@@ -34,6 +34,7 @@
 		47E8C34927BC1AAB005E2315 /* BaseNetworkProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E8C34827BC1AAB005E2315 /* BaseNetworkProtocols.swift */; };
 		53FE863E75080A35FDD81E4D /* Pods_SwiftUIBootstrapTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D31D68837B0AB172E9D0206 /* Pods_SwiftUIBootstrapTests.framework */; };
 		75EC5A44FC8225F7C89AA42C /* Pods_SwiftUIBootstrap_SwiftUIBootstrapUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E31B0EA1ACD04D0CC9ABE9 /* Pods_SwiftUIBootstrap_SwiftUIBootstrapUITests.framework */; };
+		88D4111627BF954500B566A1 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4111527BF954400B566A1 /* Strings.swift */; };
 		E974C83B6A63578C9615F2D7 /* Pods_SwiftUIBootstrap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C9949EA998ED10A8C5BB73 /* Pods_SwiftUIBootstrap.framework */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +87,7 @@
 		47E8C34527BC1A3B005E2315 /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
 		47E8C34827BC1AAB005E2315 /* BaseNetworkProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNetworkProtocols.swift; sourceTree = "<group>"; };
 		73E31B0EA1ACD04D0CC9ABE9 /* Pods_SwiftUIBootstrap_SwiftUIBootstrapUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftUIBootstrap_SwiftUIBootstrapUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		88D4111527BF954400B566A1 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		88E5AC6B2820685FE3D6404C /* Pods-SwiftUIBootstrap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUIBootstrap.release.xcconfig"; path = "Target Support Files/Pods-SwiftUIBootstrap/Pods-SwiftUIBootstrap.release.xcconfig"; sourceTree = "<group>"; };
 		C7E55D5DD2B5C7C1B33C3E77 /* Pods-SwiftUIBootstrap-SwiftUIBootstrapUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUIBootstrap-SwiftUIBootstrapUITests.debug.xcconfig"; path = "Target Support Files/Pods-SwiftUIBootstrap-SwiftUIBootstrapUITests/Pods-SwiftUIBootstrap-SwiftUIBootstrapUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		CB97A91DA44C6A167872DE69 /* Pods-SwiftUIBootstrapTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUIBootstrapTests.debug.xcconfig"; path = "Target Support Files/Pods-SwiftUIBootstrapTests/Pods-SwiftUIBootstrapTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 				47E8C33F27BC19A7005E2315 /* AppDelegate.swift */,
 				47E8C34A27BC1AB3005E2315 /* Base */,
 				4740921F27BE48BE00BD5BF4 /* Extensions */,
+				88D4111427BF952600B566A1 /* Constants */,
 				4740921827BD5D4000BD5BF4 /* Configurations */,
 				47E8C33B27BC1536005E2315 /* Modules */,
 				4756C1AA27BBD4D6005350E7 /* Assets.xcassets */,
@@ -307,6 +310,14 @@
 				4740922127BE48FD00BD5BF4 /* AppError.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		88D4111427BF952600B566A1 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				88D4111527BF954400B566A1 /* Strings.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -560,6 +571,7 @@
 				4740921727BD5D3700BD5BF4 /* Envoirnment.swift in Sources */,
 				47E8C34927BC1AAB005E2315 /* BaseNetworkProtocols.swift in Sources */,
 				47E8C33E27BC1597005E2315 /* LoginView.swift in Sources */,
+				88D4111627BF954500B566A1 /* Strings.swift in Sources */,
 				4756C1A727BBD4D2005350E7 /* SwiftUIBootstrapApp.swift in Sources */,
 				4740920D27BD016900BD5BF4 /* AlamofireServiceProvider.swift in Sources */,
 				4740922627BE49CA00BD5BF4 /* UserResponse.swift in Sources */,

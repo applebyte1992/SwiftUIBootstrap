@@ -17,19 +17,19 @@ struct LoginView: View {
             //logo..
             VStack(spacing: 40) {
                 VStack {
-                    Text("Sign In")
+                    Text(Strings.SignIn.title)
                         .font(.largeTitle)
-                    Text("Please log in to access your account")
+                    Text(Strings.SignIn.subtitle)
                         .font(.title2)
                     TextField("Email Address", text: $loginViewModel.username)
                         .keyboardType(.emailAddress)
                     SecureField("Password", text: $loginViewModel.password)
-                    Button("Log in") {
+                    Button(Strings.Button.login) {
                         loginViewModel.login()
                     }
                     .disabled(!loginViewModel.isValid)
                     .padding(20)
-                    Button("Forgot Password?") {
+                    Button(Strings.Button.forgotPassword) {
                         
                     }
                 }
