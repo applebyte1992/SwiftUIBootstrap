@@ -21,9 +21,9 @@ struct LoginView: View {
                         .font(.largeTitle)
                     Text(Strings.SignIn.subtitle)
                         .font(.title2)
-                    TextField("Email Address", text: $loginViewModel.username)
+                    TextField(Strings.SignIn.emailAddress, text: $loginViewModel.username)
                         .keyboardType(.emailAddress)
-                    SecureField("Password", text: $loginViewModel.password)
+                    SecureField(Strings.SignIn.password, text: $loginViewModel.password)
                     Button(Strings.Button.login) {
                         loginViewModel.login()
                     }

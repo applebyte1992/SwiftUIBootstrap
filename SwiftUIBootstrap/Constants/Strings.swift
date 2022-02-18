@@ -13,6 +13,7 @@ struct Strings {
         static let title = "Sign In"
         static let subtitle = "Please log in to access your account"
         static let forgotPassword = "Forgot Password?"
-        static let getStarted = "New to Amur? Get Started"
+        static let password = "Password"
+        static let emailAddress = "Email Address"
     }
 }
