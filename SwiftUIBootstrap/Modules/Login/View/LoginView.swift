@@ -10,8 +10,10 @@ import SwiftUI
 struct LoginView: View {
     
     @StateObject private var loginViewModel = LoginViewModel()
+    @State private var action: Int? = 0
     
     var body: some View {
+        NavigationView{
         ZStack {
             Color.yellow
             //logo..
@@ -29,9 +31,14 @@ struct LoginView: View {
                     }
                     .disabled(!loginViewModel.isValid)
                     .padding(20)
-                    Button(Strings.Button.forgotPassword) {
-                        
-                    }
+                    
+                    Button(action: {
+                        self.action = 1
+                    }, label: {
+                        NavigationLink(destination: TabbarView(defaultView: .constant(1)).navigationBarBackButtonHidden(true), tag: 1, selection: $action) {
+                             Text(Strings.Button.forgotPassword)
+                         }
+                    })
                 }
                 .padding(50)
                 .frame(maxWidth: 500, alignment: .center)
@@ -43,6 +50,8 @@ struct LoginView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             .background(Color.yellow)
         }
+        .hiddenNavigationBarStyle()
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
