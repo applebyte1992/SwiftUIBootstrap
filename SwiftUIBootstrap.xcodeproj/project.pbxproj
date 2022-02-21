@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		470EABB027C3AA0E0001955B /* LoginServiceAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470EABAF27C3AA0D0001955B /* LoginServiceAPITest.swift */; };
+		470EABB227C3BCDD0001955B /* LoginStorageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470EABB127C3BCDC0001955B /* LoginStorageTest.swift */; };
+		470EABB427C3C2390001955B /* LoginRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470EABB327C3C2390001955B /* LoginRepositoryTest.swift */; };
 		472EBE4B27BFDD2E007C136B /* AppErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472EBE4A27BFDD2E007C136B /* AppErrors.swift */; };
 		4740920D27BD016900BD5BF4 /* AlamofireServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4740920C27BD016900BD5BF4 /* AlamofireServiceProvider.swift */; };
 		4740920F27BD390B00BD5BF4 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4740920E27BD390B00BD5BF4 /* LoginService.swift */; };
@@ -65,6 +68,9 @@
 /* Begin PBXFileReference section */
 		28F3AD3B58D2A56A644AD5E1 /* Pods-SwiftUIBootstrapTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUIBootstrapTests.release.xcconfig"; path = "Target Support Files/Pods-SwiftUIBootstrapTests/Pods-SwiftUIBootstrapTests.release.xcconfig"; sourceTree = "<group>"; };
 		2D31D68837B0AB172E9D0206 /* Pods_SwiftUIBootstrapTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftUIBootstrapTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		470EABAF27C3AA0D0001955B /* LoginServiceAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginServiceAPITest.swift; sourceTree = "<group>"; };
+		470EABB127C3BCDC0001955B /* LoginStorageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStorageTest.swift; sourceTree = "<group>"; };
+		470EABB327C3C2390001955B /* LoginRepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepositoryTest.swift; sourceTree = "<group>"; };
 		472EBE4A27BFDD2E007C136B /* AppErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppErrors.swift; sourceTree = "<group>"; };
 		4740920C27BD016900BD5BF4 /* AlamofireServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireServiceProvider.swift; sourceTree = "<group>"; };
 		4740920E27BD390B00BD5BF4 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
@@ -258,6 +264,9 @@
 			isa = PBXGroup;
 			children = (
 				4756C1B727BBD4D6005350E7 /* SwiftUIBootstrapTests.swift */,
+				470EABAF27C3AA0D0001955B /* LoginServiceAPITest.swift */,
+				470EABB127C3BCDC0001955B /* LoginStorageTest.swift */,
+				470EABB327C3C2390001955B /* LoginRepositoryTest.swift */,
 			);
 			path = SwiftUIBootstrapTests;
 			sourceTree = "<group>";
@@ -678,6 +687,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				470EABB027C3AA0E0001955B /* LoginServiceAPITest.swift in Sources */,
+				470EABB427C3C2390001955B /* LoginRepositoryTest.swift in Sources */,
+				470EABB227C3BCDD0001955B /* LoginStorageTest.swift in Sources */,
 				4756C1B827BBD4D6005350E7 /* SwiftUIBootstrapTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

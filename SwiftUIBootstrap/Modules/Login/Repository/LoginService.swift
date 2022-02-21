@@ -11,7 +11,7 @@ import Combine
 
 
 /// Defines the endpoints available for the Authentication API
-public enum LoginService {
+enum LoginService {
     /// Endpoint for the API:
     case authenticate
 }

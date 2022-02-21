@@ -43,3 +43,14 @@ class User : Object , Codable {
 	}
 
 }
+extension User {
+    static var mock : User {
+        let user = User()
+        user.id = 102
+        user.email = "masroor@gmail.com"
+        user.firstName = "Masroor"
+        user.lastName = "Elahi"
+        user.avatar = "blank:page"
+        return user
+    }
+}
