@@ -11,32 +11,7 @@ import Combine
 import UIKit
 
 
-
-protocol AlamofireEndpoint: BaseNetworkEndpoint {
-
-    /// The HTTP method used in the request.
-    var method: HTTPMethod { get }
-
-    /// The encoding defining how to send the parameters
-    var encoding: ParameterEncoding { get }
-
-    var requestInterceptor : RequestInterceptor? { get }
-    
-}
-
-extension AlamofireEndpoint {
-
-    /// Wrapping HTTP method
-    public var method: HTTPMethod { return HTTPMethod(rawValue: httpMethod) }
-    /// Default value for Parameters encoding depends on the HTTP Method
-    public var encoding: ParameterEncoding { return URLEncoding.default }
-    
-    public var requestAdapt : RequestAdapter? { return nil }
-    
-    public var requestRetrier : RequestRetrier? { return nil }
-
-}
-
+/// This class provided an implmentation of BaseNetworkService by using Alamofire. This provider is using combine with alamofire in order to send response back.
 class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
     
     public var config: URLSessionConfiguration? {
@@ -90,9 +65,4 @@ class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
     }
     
 }
-
-struct EmptyResponse : Codable {
-    
-}
-
 

@@ -16,6 +16,8 @@ public typealias Params = [String: Any]
 public typealias Headers = [String: String]
 
 
+
+/// Base service information protocol
 protocol BaseServerInfo: AnyObject {
 
     /// The target's base `URL` based on environment settings.
@@ -26,6 +28,7 @@ protocol BaseServerInfo: AnyObject {
     
 }
 
+
 //Default Implementation
 extension BaseServerInfo {
     public var apiKey: String {
@@ -33,12 +36,15 @@ extension BaseServerInfo {
     }
 }
 
+
+/// Network client base protocol
 protocol BaseNetworkServiceClient : AnyObject { }
 
+//Default Implementation
 extension BaseNetworkServiceClient { }
 
 
-//Network Endpoint Protocols
+/// Network Endpoint Protocols
 protocol BaseNetworkEndpoint {
 
     /// Base information about the server common for all endpoints
@@ -55,10 +61,10 @@ protocol BaseNetworkEndpoint {
 
     /// The parameters for the call
     var parameters: Params? { get }
-    
 
 }
 
+//Default Implmentations
 extension BaseNetworkEndpoint {
 
     /// Utility computed property to make the complete URL
@@ -79,6 +85,8 @@ extension BaseNetworkEndpoint {
 
 }
 
+
+/// Base network service protocol
 protocol BaseNetworkService: AnyObject {
     associatedtype Target: BaseNetworkEndpoint
     /// Session configuration can be set for this API

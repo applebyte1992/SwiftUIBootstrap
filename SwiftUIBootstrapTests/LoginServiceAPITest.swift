@@ -121,6 +121,7 @@ extension MockLogin : AlamofireEndpoint {
     }
 }
 
+
 class MockLoginServiceClient : AlamofireProvider<MockLogin> , LoginServiceClientProtocol {
     
     init() {
