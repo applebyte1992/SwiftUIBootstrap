@@ -11,6 +11,8 @@ import Realm
 import RealmSwift
 
 
+extension Object : Storable  { }
+
 enum RealmError: Error {
     case eitherRealmIsNilOrNotRealmSpecificModel
     case realmException(String)
@@ -312,4 +314,4 @@ extension Array where Element : DetachableObject {
 }
 
 
-extension Object : Storable  { }
+

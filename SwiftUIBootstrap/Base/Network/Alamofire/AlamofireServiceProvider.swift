@@ -22,14 +22,14 @@ class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
         }
     }
     
-    public var manager: Session
+    private var manager: Session
     
     public init(_ config: URLSessionConfiguration? = nil) {
         let config = config ?? URLSessionConfiguration.default
         self.manager = Session(configuration: config)
     }
     
-    func fetch<T>(_ target: Target) -> AnyPublisher<T, AppError> where T : Decodable, T : Encodable {
+    func fetch<T>(_ target: Target) -> AnyPublisher<T, AppError> where T: Decodable, T: Encodable {
         guard let url = target.endPoint else {
             return Fail(error: AppError.buildNetworkError(networkError: NetworkError.init(message: GeneralNetworkError.invalidURL))).eraseToAnyPublisher()
         }
@@ -40,7 +40,7 @@ class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
         //Encoding
         var encoding: ParameterEncoding = URLEncoding.default
         //Interceptor for headers and request retriers
-        var requestInterceptor :  RequestInterceptor? = nil
+        var requestInterceptor:  RequestInterceptor? = nil
         // Get alamofire values
         if let target = target as? AlamofireEndpoint {
             method = target.method

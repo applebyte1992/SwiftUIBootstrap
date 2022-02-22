@@ -325,9 +325,9 @@
 		47E8C33C27BC1575005E2315 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				47E8C34127BC19F8005E2315 /* View */,
 				47E8C34427BC1A26005E2315 /* ViewModel */,
 				4740922927BE49D300BD5BF4 /* Model */,
-				47E8C34127BC19F8005E2315 /* View */,
 				47E8C34727BC1A3E005E2315 /* Repository */,
 			);
 			path = Login;

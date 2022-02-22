@@ -16,7 +16,9 @@ class LoginStorageTest: XCTestCase {
     var realmContext : RealmContextManager!
     
     override func setUp() {
+        
         Realm.Configuration.defaultConfiguration.inMemoryIdentifier = self.name
+        super.setUp()
     }
     
     func testUserStorageSuccess() {
