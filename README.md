@@ -31,7 +31,7 @@
         - Every views view model is placed in here and is responsible of interacting with Repository   
       - Models
         - Models of that module are placed in here   
-      - Respository
+      - Repository
         - Repo
           - Repository is responsible of comminucating with Service and Database and response back to View Model
         - Service
