@@ -38,3 +38,7 @@
           - Service is responsible of communicating with the remote server and returned mapped data back
         - Database
           - Database is responsible of communicating with local database and returned response back to repo  
+
+
+###Architecture Diagram
+![alt text](https://github.com/applebyte1992/SwiftUIBootstrap/blob/master/AppArchitecture.png)
