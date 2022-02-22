@@ -28,8 +28,13 @@
       - Views
         - All views in a modules are placed in this folder forexample authentication contains login screen, sign up screen, forgot password screen so all of them are considered as one module 
       - ViewModel
+        - Every views view model is placed in here and is responsible of interacting with Repository   
       - Models
+        - Models of that module are placed in here   
       - Respository
         - Repo
+          - Repository is responsible of comminucating with Service and Database and response back to View Model
         - Service
-        - Database     
+          - Service is responsible of communicating with the remote server and returned mapped data back
+        - Database
+          - Database is responsible of communicating with local database and returned response back to repo  
