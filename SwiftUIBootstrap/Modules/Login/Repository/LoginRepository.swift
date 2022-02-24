@@ -20,10 +20,18 @@ class LoginRepository<N:LoginServiceClientProtocol , S:LoginStorageProtocol> : B
     var subscriptions: Set<AnyCancellable> = []
     
     func loginUser(publisher: CurrentValueSubject<User, AppError>) {
-        self.client.loginService()
-            .sink { publisher.send(completion: $0) } receiveValue: { [weak self] in
-                self?.handleUserResponse(publisher: publisher, userResponse: $0)
-            }.store(in: &subscriptions)
+        self.client.loginService().sink { completion in
+            switch completion {
+            case .failure(_):
+                publisher.send(completion: completion)
+            case .finished:
+                publisher.send(completion: completion)
+            }
+        } receiveValue: {[weak self] user in
+            self?.handleUserResponse(publisher: publisher, userResponse: user)
+        }.store(in: &subscriptions)
+
+        
     }
     
     private func handleUserResponse(publisher : CurrentValueSubject<User,AppError> , userResponse : UserResponse) {

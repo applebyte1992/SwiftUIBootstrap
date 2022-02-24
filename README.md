@@ -32,7 +32,7 @@
         - Every views view model is placed in here and is responsible of interacting with Repository   
       - Models
         - Models of that module are placed in here   
-      - Repository
+      - Repositoryrese
         - Repo
           - Repository is responsible of comminucating with Service and Database and response back to View Model
         - Service
@@ -41,5 +41,4 @@
           - Database is responsible of communicating with local database and returned response back to repo  
 
 
-###Architecture Diagram
-![alt text](https://github.com/applebyte1992/SwiftUIBootstrap/blob/master/AppArchitecture.png)
+

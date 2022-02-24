@@ -16,7 +16,8 @@ class LoginViewModel: ObservableObject {
     
     var isValid = false
     
-    var userPublisher = CurrentValueSubject <User,AppError>(User.mock)
+    var userPublisher : CurrentValueSubject <User,AppError>!
+    
     
     private var cancellable = Set<AnyCancellable>()
     private var loginRepo : LoginRepositoryInputProtocol
@@ -30,6 +31,7 @@ class LoginViewModel: ObservableObject {
     }
     
     func login() {
+        userPublisher = CurrentValueSubject<User,AppError>(User())
         loginRepo.loginUser(publisher: userPublisher)
         userPublisher.sink { error in
             switch error {
