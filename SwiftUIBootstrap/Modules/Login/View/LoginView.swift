@@ -13,45 +13,59 @@ struct LoginView: View {
     @State private var action: Int? = 0
     
     var body: some View {
-        NavigationView{
-        ZStack {
-            Color.yellow
-            //logo..
-            VStack(spacing: 40) {
-                VStack {
-                    Text(Strings.SignIn.title)
-                        .font(.largeTitle)
-                    Text(Strings.SignIn.subtitle)
-                        .font(.title2)
-                    TextField(Strings.SignIn.emailAddress, text: $loginViewModel.username)
-                        .keyboardType(.emailAddress)
-                    SecureField(Strings.SignIn.password, text: $loginViewModel.password)
-                    Button(Strings.Button.login) {
-                        loginViewModel.login()
+        NavigationView {
+            ZStack {
+                Color.yellow
+                //logo..
+                VStack(spacing: 40) {
+                    VStack {
+                        Text(Strings.SignIn.title)
+                            .font(.largeTitle)
+                        Text(Strings.SignIn.subtitle)
+                            .font(.title2)
+                        TextField(Strings.SignIn.emailAddress, text: $loginViewModel.username)
+                            .keyboardType(.emailAddress)
+                        SecureField(Strings.SignIn.password, text: $loginViewModel.password)
+                        Button(Strings.Button.login) {
+                            loginViewModel.login()
+                        }
+                        .disabled(!loginViewModel.isValid)
+                        .padding(20)
+                        
+                        Button(action: {
+                            self.action = 1
+                        }, label: {
+                            NavigationLink(destination: TabbarView(defaultView: .constant(1)).navigationBarBackButtonHidden(true), tag: 1, selection: $action) {
+                                Text(Strings.Button.forgotPassword)
+                            }
+                        })
+                        NavigationLink(destination:
+                                        TabbarView(defaultView: .constant(1)),
+                                       isActive: self.$loginViewModel.isLogin) {
+                            EmptyView()
+                        }.hidden()
+                        
                     }
-                    .disabled(!loginViewModel.isValid)
-                    .padding(20)
-                    
-                    Button(action: {
-                        self.action = 1
-                    }, label: {
-                        NavigationLink(destination: TabbarView(defaultView: .constant(1)).navigationBarBackButtonHidden(true), tag: 1, selection: $action) {
-                             Text(Strings.Button.forgotPassword)
-                         }
-                    })
+                    .padding(50)
+                    .frame(maxWidth: 500, alignment: .center)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(.none)
                 }
-                .padding(50)
-                .frame(maxWidth: 500, alignment: .center)
-                .background(Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .autocapitalization(.none)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                .background(Color.yellow)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-            .background(Color.yellow)
+            .onAppear {
+                print("View Loaded")
+            }
+            .onDisappear {
+                print("View Unloaded")
+                loginViewModel.dispose()
+            }
+            .hiddenNavigationBarStyle()
         }
-        .hiddenNavigationBarStyle()
-        }.navigationViewStyle(StackNavigationViewStyle())
+        
     }
 }
 

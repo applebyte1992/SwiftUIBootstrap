@@ -26,7 +26,8 @@
   - Modules
     - Project is divided into smallers modules based on their bussiness logic like Authentication, Home Screens, Profile etc and placed inside this folder.
       - Views
-        - All views in a modules are placed in this folder forexample authentication contains login screen, sign up screen, forgot password screen so all of them are considered as one module 
+        - All views in a modules are placed in this folder forexample authentication contains login screen, sign up screen, forgot password screen so all of them are considered as one module
+        - We are not using any factory pattery for making UI as we'll be using subclasses of for each controls and handle generic logics on parent classes.
       - ViewModel
         - Every views view model is placed in here and is responsible of interacting with Repository   
       - Models

@@ -12,9 +12,11 @@ class LoginViewModel: ObservableObject {
     
     @Published var username = ""
     @Published var password = ""
+    @Published var isLogin = false
+    
     var isValid = false
     
-    var userPublisher = PassthroughSubject<User,AppError>()
+    var userPublisher = CurrentValueSubject <User,AppError>(User.mock)
     
     private var cancellable = Set<AnyCancellable>()
     private var loginRepo : LoginRepositoryInputProtocol
@@ -30,11 +32,28 @@ class LoginViewModel: ObservableObject {
     func login() {
         loginRepo.loginUser(publisher: userPublisher)
         userPublisher.sink { error in
-            print(error)
+            switch error {
+            case .finished:
+                print("Finished")
+                self.isLogin = true
+                break
+            case .failure(let er):
+                print(er)
+                break
+            }                
         } receiveValue: { user in
             print(user)
         }.store(in: &cancellable)
     }
+    
+    func dispose() {
+        self.loginRepo.dispose()
+        self.cancellable.forEach { object in
+            object.cancel()
+        }
+        self.cancellable = []
+    }
+    
 }
 
 
