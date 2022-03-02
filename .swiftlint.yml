@@ -1,0 +1,14 @@
+disabled_rules: # rules you don't want to use
+  - comma
+
+excluded: # exclude some directories, such as 3rd Carthage, pods and so on
+  - Carthage
+  - Pods
+
+line_length:
+  warning: 200
+  error: 250
+
+file_length:
+  warning: 300
+  error: 350

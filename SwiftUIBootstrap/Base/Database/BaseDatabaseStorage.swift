@@ -7,13 +7,12 @@
 
 import Foundation
 
-
-protocol BaseStorageClient : AnyObject { }
+protocol BaseStorageClient: AnyObject { }
 extension BaseStorageClient { }
 
 class BaseDatabaseStorage {
     public var storage: BaseStorageContext
-    required public init(storage : BaseStorageContext) {
+    required public init(storage: BaseStorageContext) {
         self.storage = storage
     }
 }

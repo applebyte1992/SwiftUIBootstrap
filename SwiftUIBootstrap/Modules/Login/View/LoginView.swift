@@ -8,15 +8,13 @@
 import SwiftUI
 
 struct LoginView: View {
-    
     @StateObject private var loginViewModel = LoginViewModel()
     @State private var action: Int? = 0
-    
     var body: some View {
         NavigationView {
             ZStack {
                 Color.yellow
-                //logo..
+                // logo..
                 VStack(spacing: 40) {
                     VStack {
                         Text(Strings.SignIn.title)
@@ -31,7 +29,6 @@ struct LoginView: View {
                         }
                         .disabled(!loginViewModel.isValid)
                         .padding(20)
-                        
                         Button(action: {
                             self.action = 1
                         }, label: {
@@ -44,7 +41,6 @@ struct LoginView: View {
                                        isActive: self.$loginViewModel.isLogin) {
                             EmptyView()
                         }.hidden()
-                        
                     }
                     .padding(50)
                     .frame(maxWidth: 500, alignment: .center)
@@ -65,7 +61,6 @@ struct LoginView: View {
             }
             .hiddenNavigationBarStyle()
         }
-        
     }
 }
 

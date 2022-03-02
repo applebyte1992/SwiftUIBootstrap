@@ -9,25 +9,19 @@ import Foundation
 import Combine
 
 class LoginViewModel: ObservableObject {
-    
     @Published var username = ""
     @Published var password = ""
     @Published var isLogin = false
-    
     var isValid = false
-    
-    
     private var cancellable = Set<AnyCancellable>()
-    private var loginRepo : LoginRepositoryInputProtocol
-    
-    init(loginRepo : LoginRepositoryInputProtocol = LoginRepository(client: LoginServiceClient(), storage: UserStorage(storage: RealmContextManager()))){
+    private var loginRepo: LoginRepositoryInputProtocol
+    init(loginRepo: LoginRepositoryInputProtocol = LoginRepository(client: LoginServiceClient(), storage: UserStorage(storage: RealmContextManager()))) {
         self.loginRepo = loginRepo
          Publishers.CombineLatest($username, $password)
             .map { $0.count > 0 && $1.count > 0 }
             .assign(to: \.isValid, on: self)
             .store(in: &cancellable)
     }
-    
     func login() {
         Task {
             do {
@@ -39,7 +33,6 @@ class LoginViewModel: ObservableObject {
             }
         }
     }
-    
     func dispose() {
         self.cancellable.forEach { object in
             object.cancel()
@@ -47,5 +40,3 @@ class LoginViewModel: ObservableObject {
         self.cancellable = []
     }
 }
-
-

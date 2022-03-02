@@ -7,13 +7,10 @@
 
 import Foundation
 
-
-class LoginServer : BaseServerInfo {
-    
+class LoginServer: BaseServerInfo {
     var apiKey: String {
         return ""
     }
-    
     var baseURL: String {
         return "https://reqres.in/api"
     }

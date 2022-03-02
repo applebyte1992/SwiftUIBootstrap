@@ -5,8 +5,9 @@ target 'SwiftUIBootstrap' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-    pod 'Alamofire', '~> 5.5'
-    pod 'RealmSwift', '~>10' 
+    pod 'Alamofire', '5.5.0'
+    pod 'RealmSwift', '10.22.0'
+    pod 'SwiftLint' , '0.46.3'
   # Pods for SwiftUIBootstrap
 
   target 'SwiftUIBootstrapTests' do
