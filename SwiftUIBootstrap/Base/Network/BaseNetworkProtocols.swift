@@ -93,6 +93,6 @@ protocol BaseNetworkService: AnyObject {
     var config: URLSessionConfiguration? { get set }
 
     /// actual method that handles the network call and relay the response back after parsing json
-    func fetch<T: Codable>(_ target: Target) -> AnyPublisher<T, AppError>
+    func fetch<T>(_ target: Target) async throws -> T where T: Decodable, T: Encodable
 }
 

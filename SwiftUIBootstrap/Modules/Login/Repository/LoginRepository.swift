@@ -11,47 +11,25 @@ import RealmSwift
 
 
 protocol LoginRepositoryInputProtocol  {
-    func loginUser(publisher: CurrentValueSubject<User, AppError>)
-    func dispose()
+    func loginUser() async throws -> User
 }
 
 
 class LoginRepository<N:LoginServiceClientProtocol , S:LoginStorageProtocol> : BaseRepositoryStorage<S,N> , LoginRepositoryInputProtocol {
     var subscriptions: Set<AnyCancellable> = []
-    
-    func loginUser(publisher: CurrentValueSubject<User, AppError>) {
-        self.client.loginService().sink { completion in
-            switch completion {
-            case .failure(_):
-                publisher.send(completion: completion)
-            case .finished:
-                publisher.send(completion: completion)
-            }
-        } receiveValue: {[weak self] user in
-            self?.handleUserResponse(publisher: publisher, userResponse: user)
-        }.store(in: &subscriptions)
 
-        
-    }
-    
-    private func handleUserResponse(publisher : CurrentValueSubject<User,AppError> , userResponse : UserResponse) {
+    @MainActor
+    func loginUser() async throws -> User {
         do {
-            try self.storage.saveUserInformation(user: userResponse.user!)
-            if let user = self.storage.getUserInformation(userId: userResponse.user?.id ?? 0) {
-                publisher.send(user)
+            guard let user = try await self.client.loginService().user else {
+                throw AppError.buildNilDataError
             }
-        } catch let err as AppError {
-            publisher.send(completion: .failure(err))
-        } catch {
-            print("Generic Exception")
+            try self.storage.saveUserInformation(user: user)
+            guard let savedUser = self.storage.getUserInformation(userId: user.id ?? 0) else {
+                throw AppError.buildNilDataError
+            }
+            return savedUser
         }
-    }
-    
-    func dispose() {
-        self.subscriptions.forEach { object in
-            object.cancel()
-        }
-        self.subscriptions = []
     }
 }
 

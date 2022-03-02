@@ -16,8 +16,6 @@ class LoginViewModel: ObservableObject {
     
     var isValid = false
     
-    var userPublisher : CurrentValueSubject <User,AppError>!
-    
     
     private var cancellable = Set<AnyCancellable>()
     private var loginRepo : LoginRepositoryInputProtocol
@@ -31,31 +29,23 @@ class LoginViewModel: ObservableObject {
     }
     
     func login() {
-        userPublisher = CurrentValueSubject<User,AppError>(User())
-        loginRepo.loginUser(publisher: userPublisher)
-        userPublisher.sink { error in
-            switch error {
-            case .finished:
-                print("Finished")
+        Task {
+            do {
+                let user = try await self.loginRepo.loginUser()
+                print(user)
                 self.isLogin = true
-                break
-            case .failure(let er):
-                print(er)
-                break
-            }                
-        } receiveValue: { user in
-            print(user)
-        }.store(in: &cancellable)
+            } catch let error as AppError {
+                print(error.message)
+            }
+        }
     }
     
     func dispose() {
-        self.loginRepo.dispose()
         self.cancellable.forEach { object in
             object.cancel()
         }
         self.cancellable = []
     }
-    
 }
 
 

@@ -29,9 +29,10 @@ class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
         self.manager = Session(configuration: config)
     }
     
-    func fetch<T>(_ target: Target) -> AnyPublisher<T, AppError> where T: Decodable, T: Encodable {
+    
+    func fetch<T>(_ target: Target) async throws -> T where T: Decodable, T: Encodable {
         guard let url = target.endPoint else {
-            return Fail(error: AppError.buildNetworkError(networkError: NetworkError.init(message: GeneralNetworkError.invalidURL))).eraseToAnyPublisher()
+            throw AppError.buildNetworkError(networkError: NetworkError.init(message: GeneralNetworkError.invalidURL))
         }
         //Paramters
         let params: Parameters? = target.parameters
@@ -52,17 +53,13 @@ class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
         if let headers = target.headers {
             httpHeaders = HTTPHeaders(headers)
         }
-        
-        return manager.request(url, method: method, parameters: params, encoding: encoding, headers: httpHeaders, interceptor: requestInterceptor)
-            .validate()
-            .publishDecodable(type: T.self , emptyResponseCodes: [200, 204, 205])
-            .value()
-            .mapError({ err in
-                AppError.buildNetworkError(networkError: NetworkError.init(alamofireError: err))
-            })
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
+        do {
+            return try await manager.request(url, method: method, parameters: params, encoding: encoding, headers: httpHeaders, interceptor: requestInterceptor)
+            .serializingDecodable(T.self , emptyResponseCodes: [200, 204, 205])
+            .value
+        } catch let exception as AFError {
+            throw AppError.buildNetworkError(networkError: NetworkError.init(alamofireError: exception))
+        }
     }
-    
 }
 

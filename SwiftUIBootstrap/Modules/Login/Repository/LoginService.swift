@@ -55,7 +55,7 @@ extension LoginService: AlamofireEndpoint {
 }
 
 protocol LoginServiceClientProtocol : BaseNetworkServiceClient {
-    func loginService() -> AnyPublisher<UserResponse, AppError>
+    func loginService() async throws -> UserResponse
 }
 
 /// API Client for the Authentication API
@@ -65,9 +65,8 @@ class LoginServiceClient : AlamofireProvider<LoginService> , LoginServiceClientP
         super.init()
     }
     
-    func loginService() -> AnyPublisher<UserResponse, AppError>  {
-        return super.fetch(.authenticate)
+    func loginService() async throws -> UserResponse  {
+        return try await super.fetch(.authenticate)
     }
-
 
 }
