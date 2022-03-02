@@ -1,13 +1,12 @@
-
 import Foundation
 import RealmSwift
 
-class User : Object , Codable {
-    @Persisted var id : Int?
-    @Persisted var email : String?
-    @Persisted var firstName : String?
-    @Persisted var lastName : String?
-    @Persisted var  avatar : String?
+class User: Object,Codable {
+    @Persisted var id: Int?
+    @Persisted var email: String?
+    @Persisted var firstName: String?
+    @Persisted var lastName: String?
+    @Persisted var  avatar: String?
 
 	enum CodingKeys: String, CodingKey {
 		case id
@@ -16,10 +15,7 @@ class User : Object , Codable {
 		case lastName = "last_name"
 		case avatar
 	}
-    
-    override init() {
-        
-    }
+    override init() { }
 
     required init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -32,7 +28,7 @@ class User : Object , Codable {
 
 }
 extension User {
-    static var mock : User {
+    static var mock: User {
         let user = User()
         user.id = 102
         user.email = "masroor@gmail.com"

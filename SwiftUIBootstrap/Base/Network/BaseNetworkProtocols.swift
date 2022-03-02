@@ -15,8 +15,6 @@ public typealias Params = [String: Any]
 /// A dictionary of headers to apply to a `URLRequest`.
 public typealias Headers = [String: String]
 
-
-
 /// Base service information protocol
 protocol BaseServerInfo: AnyObject {
 
@@ -25,24 +23,20 @@ protocol BaseServerInfo: AnyObject {
 
     /// Application key for getting the OAuth access token
     var apiKey: String { get }
-    
 }
 
-
-//Default Implementation
+// Default Implementation
 extension BaseServerInfo {
     public var apiKey: String {
         return ""
     }
 }
 
-
 /// Network client base protocol
-protocol BaseNetworkServiceClient : AnyObject { }
+protocol BaseNetworkServiceClient: AnyObject { }
 
-//Default Implementation
+// Default Implementation
 extension BaseNetworkServiceClient { }
-
 
 /// Network Endpoint Protocols
 protocol BaseNetworkEndpoint {
@@ -64,7 +58,7 @@ protocol BaseNetworkEndpoint {
 
 }
 
-//Default Implmentations
+// Default Implmentations
 extension BaseNetworkEndpoint {
 
     /// Utility computed property to make the complete URL
@@ -85,7 +79,6 @@ extension BaseNetworkEndpoint {
 
 }
 
-
 /// Base network service protocol
 protocol BaseNetworkService: AnyObject {
     associatedtype Target: BaseNetworkEndpoint
@@ -95,4 +88,3 @@ protocol BaseNetworkService: AnyObject {
     /// actual method that handles the network call and relay the response back after parsing json
     func fetch<T>(_ target: Target) async throws -> T where T: Decodable, T: Encodable
 }
-

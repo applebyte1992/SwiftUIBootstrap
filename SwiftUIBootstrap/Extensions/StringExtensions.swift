@@ -12,4 +12,3 @@ extension String {
     static let HTTPPost = "POST"
     static let HTTPPut = "PUT"
 }
-

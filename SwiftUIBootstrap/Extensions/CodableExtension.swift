@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 extension Decodable {
 
     /// Try to deserialize directly from JSON data

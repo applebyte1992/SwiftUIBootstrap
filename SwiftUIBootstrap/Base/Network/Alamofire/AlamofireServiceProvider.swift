@@ -10,10 +10,8 @@ import Alamofire
 import Combine
 import UIKit
 
-
 /// This class provided an implmentation of BaseNetworkService by using Alamofire. This provider is using combine with alamofire in order to send response back.
 class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
-    
     public var config: URLSessionConfiguration? {
         didSet {
             if let config = config {
@@ -21,35 +19,31 @@ class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
             }
         }
     }
-    
     private var manager: Session
-    
     public init(_ config: URLSessionConfiguration? = nil) {
         let config = config ?? URLSessionConfiguration.default
         self.manager = Session(configuration: config)
     }
-    
-    
     func fetch<T>(_ target: Target) async throws -> T where T: Decodable, T: Encodable {
         guard let url = target.endPoint else {
             throw AppError.buildNetworkError(networkError: NetworkError.init(message: GeneralNetworkError.invalidURL))
         }
-        //Paramters
+        // Paramters
         let params: Parameters? = target.parameters
-        //HTTP Method
+        // HTTP Method
         var method: HTTPMethod = .get
-        //Encoding
+        // Encoding
         var encoding: ParameterEncoding = URLEncoding.default
-        //Interceptor for headers and request retriers
-        var requestInterceptor:  RequestInterceptor? = nil
+        // Interceptor for headers and request retriers
+        var requestInterceptor: RequestInterceptor?
         // Get alamofire values
         if let target = target as? AlamofireEndpoint {
             method = target.method
             encoding = target.encoding
             requestInterceptor = target.requestInterceptor
         }
-        //Headers
-        var httpHeaders : HTTPHeaders? = nil
+        // Headers
+        var httpHeaders: HTTPHeaders?
         if let headers = target.headers {
             httpHeaders = HTTPHeaders(headers)
         }
@@ -62,4 +56,3 @@ class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
         }
     }
 }
-

@@ -9,15 +9,11 @@ import Foundation
 import Combine
 import RealmSwift
 
-
-protocol LoginRepositoryInputProtocol  {
+protocol LoginRepositoryInputProtocol {
     func loginUser() async throws -> User
 }
-
-
-class LoginRepository<N:LoginServiceClientProtocol , S:LoginStorageProtocol> : BaseRepositoryStorage<S,N> , LoginRepositoryInputProtocol {
+class LoginRepository<N: LoginServiceClientProtocol,S: LoginStorageProtocol>: BaseRepositoryStorage<S,N>,LoginRepositoryInputProtocol {
     var subscriptions: Set<AnyCancellable> = []
-
     @MainActor
     func loginUser() async throws -> User {
         do {
@@ -32,5 +28,3 @@ class LoginRepository<N:LoginServiceClientProtocol , S:LoginStorageProtocol> : B
         }
     }
 }
-
-
