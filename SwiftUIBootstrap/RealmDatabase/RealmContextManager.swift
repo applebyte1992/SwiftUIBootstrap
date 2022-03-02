@@ -151,7 +151,7 @@ class RealmContextManager: BaseStorageContext {
             print(excep.localizedDescription)
         }
     }
-    func save(list : [Storable]) throws {
+    func save(list: [Storable]) throws {
         guard let realm = self.realm else {
             throw RealmError.eitherRealmIsNilOrNotRealmSpecificModel
         }
@@ -186,7 +186,6 @@ class RealmContextManager: BaseStorageContext {
     func create<T>(_ model: T.Type, updates: Any?, completion: @escaping ((T) -> Void)) throws where T: Storable {
     }
 }
-
 
 extension Results {
     /// Convert Realm Arrat To Swift Array
