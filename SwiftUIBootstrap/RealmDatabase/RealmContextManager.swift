@@ -151,7 +151,7 @@ class RealmContextManager: BaseStorageContext {
             print(excep.localizedDescription)
         }
     }
-    func save(list: [Storable]) throws {
+    func save(list : [Storable]) throws {
         guard let realm = self.realm else {
             throw RealmError.eitherRealmIsNilOrNotRealmSpecificModel
         }
