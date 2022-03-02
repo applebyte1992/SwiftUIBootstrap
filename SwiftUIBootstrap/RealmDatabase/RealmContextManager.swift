@@ -139,7 +139,7 @@ class RealmContextManager: BaseStorageContext {
             guard let castType = model as? Object.Type else {
                 return
             }
-            var result: Results<Object>
+            var result : Results<Object>
             if let predicate = predicate {
                 result = realm.objects(castType).filter(predicate)
             } else {

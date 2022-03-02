@@ -24,9 +24,8 @@ target 'SwiftUIBootstrap' do
   end
 
   post_install do |installer|
-    system("../scripts/post-pod-install.sh")
+    system("/scripts/post-pod-install.sh")
     installer.pods_project.targets.each do |target|
     end
   end
-  
 end
