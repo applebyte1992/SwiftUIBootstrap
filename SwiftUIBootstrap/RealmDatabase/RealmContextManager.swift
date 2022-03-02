@@ -139,7 +139,7 @@ class RealmContextManager: BaseStorageContext {
             guard let castType = model as? Object.Type else {
                 return
             }
-            var result : Results<Object>
+            var result: Results<Object>
             if let predicate = predicate {
                 result = realm.objects(castType).filter(predicate)
             } else {
@@ -186,6 +186,7 @@ class RealmContextManager: BaseStorageContext {
     func create<T>(_ model: T.Type, updates: Any?, completion: @escaping ((T) -> Void)) throws where T: Storable {
     }
 }
+
 
 extension Results {
     /// Convert Realm Arrat To Swift Array
