@@ -4,8 +4,22 @@ import SwiftUI
 
 struct AccountView: View {
     var body: some View {
-        Text("Account view")
-            .font(.system(size: 40, weight: .bold, design: .default))
+        
+        CustomNavView {
+            ZStack {
+                Color.white.ignoresSafeArea()
+                
+                CustomNavLink(destination:
+                                Text("Second Screen")
+                                .customNavigationTitle("Second Screen title")
+                ) {
+                    Text("Accounts view")
+                    .font(.system(size: 40, weight: .bold, design: .default))
+                    
+                }
+            }
+            .customNavBarItems(title: "Accounts", backButtonHidden: true) //by default back button is visible
+        }
     }
 }
 

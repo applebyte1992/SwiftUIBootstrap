@@ -4,8 +4,20 @@ import SwiftUI
 
 struct OrganizationView: View {
     var body: some View {
-        Text("Organization view")
-            .font(.system(size: 40, weight: .bold, design: .default))
+        CustomNavView {
+            ZStack {
+                Color.white.ignoresSafeArea()
+                
+                CustomNavLink(destination:
+                                Text("detail screen")
+                                .customNavigationTitle("detail screen title")
+                ) {
+                    Text("Organization view")
+                    .font(.system(size: 40, weight: .bold, design: .default))
+                }
+            }
+            .customNavBarItems(title: "Organizations", backButtonHidden: true)
+        }
     }
 }
 
