@@ -8,19 +8,16 @@ struct CustomNavBarView: View {
     let showBackButton: Bool
     let title: String
     let subtitle: String?
-    
     var body: some View {
+        ZStack {
         HStack {
             if showBackButton {
                 backButton
             }
             titleSection
-            Spacer()
             Text("logo")
-                .frame(width: 50, height: 50, alignment: .center)
             Spacer()
             Text("Content")
-
         }
         .padding()
         .accentColor(.white)
@@ -30,10 +27,10 @@ struct CustomNavBarView: View {
             Color.blue.ignoresSafeArea(edges: .top)
         )
     }
+    }
 }
 
 extension CustomNavBarView {
-    
     private var backButton: some View {
         Button(action: {
             presentationMode.wrappedValue.dismiss()
@@ -41,7 +38,6 @@ extension CustomNavBarView {
             Image(systemName: "chevron.left")
         })
     }
-    
     private var titleSection: some View {
         VStack(spacing: 4) {
             Text(title)
@@ -52,7 +48,6 @@ extension CustomNavBarView {
             }
         }
     }
-    
 }
 
 struct CustomNavBarView_Previews: PreviewProvider {

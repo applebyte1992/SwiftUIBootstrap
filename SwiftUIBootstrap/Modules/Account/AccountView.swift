@@ -7,7 +7,6 @@ struct AccountView: View {
         
         CustomNavView {
             ZStack {
-                Color.white.ignoresSafeArea()
                 
                 CustomNavLink(destination:
                                 Text("Second Screen")
