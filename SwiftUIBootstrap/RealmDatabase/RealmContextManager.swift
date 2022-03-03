@@ -139,7 +139,7 @@ class RealmContextManager: BaseStorageContext {
             guard let castType = model as? Object.Type else {
                 return
             }
-            var result : Results<Object>
+            var result: Results<Object>
             if let predicate = predicate {
                 result = realm.objects(castType).filter(predicate)
             } else {
@@ -151,7 +151,7 @@ class RealmContextManager: BaseStorageContext {
             print(excep.localizedDescription)
         }
     }
-    func save(list : [Storable]) throws {
+    func save(list: [Storable]) throws {
         guard let realm = self.realm else {
             throw RealmError.eitherRealmIsNilOrNotRealmSpecificModel
         }
