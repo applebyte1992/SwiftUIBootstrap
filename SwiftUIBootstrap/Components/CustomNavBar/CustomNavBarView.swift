@@ -9,25 +9,27 @@ struct CustomNavBarView: View {
     let title: String
     let subtitle: String?
     var body: some View {
-        ZStack {
-        HStack {
-            if showBackButton {
-                backButton
+            HStack {
+                if showBackButton {
+                    backButton
+                }
+                titleSection
+                Spacer()
+                Text("Content")
             }
-            titleSection
-            Text("logo")
-            Spacer()
-            Text("Content")
+            .padding()
+            .accentColor(.white)
+            .foregroundColor(.white)
+            .font(.headline)
+            .background(
+                Color.blue.ignoresSafeArea(edges: .top)
+            )
+            .overlay(
+                Text("logo")
+                    .foregroundColor(.white)
+                , alignment: .center
+            )
         }
-        .padding()
-        .accentColor(.white)
-        .foregroundColor(.white)
-        .font(.headline)
-        .background(
-            Color.blue.ignoresSafeArea(edges: .top)
-        )
-    }
-    }
 }
 
 extension CustomNavBarView {
