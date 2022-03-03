@@ -2,7 +2,7 @@
 
 import SwiftUI
 
-struct CustomNavView<Content:View>: View {
+struct CustomNavView<Content: View>: View {
     
     let content: Content
     
@@ -29,8 +29,8 @@ struct CustomNavView_Previews: PreviewProvider {
     }
 }
 
+// This is for swiping back without clicking on back button
 extension UINavigationController {
-    
     open override func viewDidLoad() {
         super.viewDidLoad()
         interactivePopGestureRecognizer?.delegate = nil

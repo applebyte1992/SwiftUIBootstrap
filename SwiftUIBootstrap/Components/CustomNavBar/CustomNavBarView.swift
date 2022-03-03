@@ -15,7 +15,7 @@ struct CustomNavBarView: View {
                 }
                 titleSection
                 Spacer()
-                Text("Content")
+                buttonsView
             }
             .padding()
             .accentColor(.white)
@@ -25,8 +25,7 @@ struct CustomNavBarView: View {
                 Color.blue.ignoresSafeArea(edges: .top)
             )
             .overlay(
-                Text("logo")
-                    .foregroundColor(.white)
+                logo
                 , alignment: .center
             )
         }
@@ -40,6 +39,7 @@ extension CustomNavBarView {
             Image(systemName: "chevron.left")
         })
     }
+    
     private var titleSection: some View {
         VStack(spacing: 4) {
             Text(title)
@@ -49,6 +49,18 @@ extension CustomNavBarView {
                 Text(subtitle)
             }
         }
+    }
+    
+    private var logo: some View {
+        Text("logo")
+            .font(.title)
+            .frame(height: 100)
+            .foregroundColor(.white)
+    }
+    
+    private var buttonsView: some View {
+        Text("button content")
+            .foregroundColor(.white)
     }
 }
 
