@@ -8,7 +8,7 @@
 # $ chmod +x pre-commit
 
 REPO_HOME="$(git rev-parse --show-toplevel)"
-PROJECT_HOME="${REPO_HOME}"/code
+PROJECT_HOME="${REPO_HOME}"/
 LINTER="${PROJECT_HOME}"/Pods/SwiftLint/swiftlint
 
 if [[ -e "${LINTER}" ]]; then

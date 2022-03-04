@@ -13,7 +13,7 @@ target 'SwiftUIBootstrap' do
   # Comment the next line if you don't want to use dynamic frameworks
   shared_pods
 
-
+#  /Users/masroorelahi/Desktop/Projects/SwiftUIBootstrap/scripts/post-pod-install.sh
   target 'SwiftUIBootstrapTests' do
     inherit! :search_paths
     # Pods for testing
@@ -23,9 +23,4 @@ target 'SwiftUIBootstrap' do
     # Pods for testing
   end
 
-  post_install do |installer|
-    system("../scripts/post-pod-install.sh")
-    installer.pods_project.targets.each do |target|
-    end
-  end
 end
