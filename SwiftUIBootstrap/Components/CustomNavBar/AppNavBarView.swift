@@ -3,7 +3,9 @@
 import SwiftUI
 
 struct AppNavBarView: View {
+    
     var body: some View {
+        
         CustomNavView {
             ZStack {
                 Color.green.ignoresSafeArea()

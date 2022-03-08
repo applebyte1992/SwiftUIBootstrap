@@ -13,6 +13,7 @@ struct CustomNavLink<Label:View, Destination:View>: View {
     }
     
     var body: some View {
+        
         NavigationLink(
             destination:
                 CustomNavBarContainerView(content: {

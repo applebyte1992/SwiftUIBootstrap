@@ -3,7 +3,9 @@
 import SwiftUI
 
 struct TabbarView: View {
+    
     @Binding var defaultView: Int
+    
     var body: some View {
         TabView(selection: $defaultView) {
             ScheduleView()

@@ -8,7 +8,9 @@ struct CustomNavBarView: View {
     let showBackButton: Bool
     let title: String
     let subtitle: String?
+    
     var body: some View {
+        
             HStack {
                 if showBackButton {
                     backButton
@@ -32,6 +34,7 @@ struct CustomNavBarView: View {
 }
 
 extension CustomNavBarView {
+    
     private var backButton: some View {
         Button(action: {
             presentationMode.wrappedValue.dismiss()

@@ -3,11 +3,12 @@
 import SwiftUI
 
 struct OrganizationView: View {
+    
     var body: some View {
+        
         CustomNavView {
             ZStack {
                 Color.white.ignoresSafeArea()
-                
                 CustomNavLink(destination:
                                 Text("detail screen")
                                 .customNavigationTitle("detail screen title")

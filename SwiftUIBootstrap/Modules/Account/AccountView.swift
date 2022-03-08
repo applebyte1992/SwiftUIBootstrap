@@ -3,11 +3,11 @@
 import SwiftUI
 
 struct AccountView: View {
+    
     var body: some View {
         
         CustomNavView {
             ZStack {
-                
                 CustomNavLink(destination:
                                 Text("Second Screen")
                                 .customNavigationTitle("Second Screen title")

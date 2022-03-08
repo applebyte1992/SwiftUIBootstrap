@@ -10,7 +10,6 @@ struct CustomNavBarTitlePreferenceKey: PreferenceKey {
     static func reduce(value: inout String, nextValue: () -> String) {
         value = nextValue()
     }
-    
 }
 
 struct CustomNavBarSubtitlePreferenceKey: PreferenceKey {
@@ -30,7 +29,6 @@ struct CustomNavBarBackButtonHiddenPreferenceKey: PreferenceKey {
     static func reduce(value: inout Bool, nextValue: () -> Bool) {
         value = nextValue()
     }
-    
 }
 
 extension View {
@@ -53,5 +51,4 @@ extension View {
             .customNavigationSubtitle(subtitle)
             .customNavigationBarBackButtonHidden(backButtonHidden)
     }
-    
 }

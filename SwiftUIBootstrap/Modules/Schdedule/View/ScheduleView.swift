@@ -3,12 +3,13 @@
 import SwiftUI
 
 struct ScheduleView: View {
+    
     var body: some View {
         
         CustomNavView {
+            
             ZStack {
                 Color.white.ignoresSafeArea()
-                
                 CustomNavLink(destination:
                                 Text("Second Screen")
                                 .customNavigationTitle("Second Screen title")
