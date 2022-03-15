@@ -13,7 +13,7 @@ struct SwiftUIBootstrapApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            TabbarView(defaultView: .constant(1))//LoginView()
         }
     }
 }
