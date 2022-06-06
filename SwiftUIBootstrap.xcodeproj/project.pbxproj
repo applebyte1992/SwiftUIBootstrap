@@ -31,6 +31,9 @@
 		4756C1B827BBD4D6005350E7 /* SwiftUIBootstrapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4756C1B727BBD4D6005350E7 /* SwiftUIBootstrapTests.swift */; };
 		4756C1C227BBD4D6005350E7 /* SwiftUIBootstrapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4756C1C127BBD4D6005350E7 /* SwiftUIBootstrapUITests.swift */; };
 		4756C1C427BBD4D6005350E7 /* SwiftUIBootstrapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4756C1C327BBD4D6005350E7 /* SwiftUIBootstrapUITestsLaunchTests.swift */; };
+		47A93A99284E094500B62520 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A93A98284E094500B62520 /* BaseViewModel.swift */; };
+		47A93A9B284E120D00B62520 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A93A9A284E120D00B62520 /* AppColors.swift */; };
+		47A93A9E284E18F100B62520 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A93A9D284E18F100B62520 /* LoaderView.swift */; };
 		47BF192427C4F13600D72223 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 47BF192327C4F13600D72223 /* README.md */; };
 		47BF192827C4F96E00D72223 /* BaseAlamofireProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF192727C4F96E00D72223 /* BaseAlamofireProtocols.swift */; };
 		47E8C33E27BC1597005E2315 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E8C33D27BC1597005E2315 /* LoginView.swift */; };
@@ -98,6 +101,9 @@
 		4756C1BD27BBD4D6005350E7 /* SwiftUIBootstrapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUIBootstrapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4756C1C127BBD4D6005350E7 /* SwiftUIBootstrapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIBootstrapUITests.swift; sourceTree = "<group>"; };
 		4756C1C327BBD4D6005350E7 /* SwiftUIBootstrapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIBootstrapUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		47A93A98284E094500B62520 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		47A93A9A284E120D00B62520 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
+		47A93A9D284E18F100B62520 /* LoaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		47BF192327C4F13600D72223 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		47BF192727C4F96E00D72223 /* BaseAlamofireProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAlamofireProtocols.swift; sourceTree = "<group>"; };
 		47E8C33D27BC1597005E2315 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -287,6 +293,14 @@
 			path = SwiftUIBootstrapUITests;
 			sourceTree = "<group>";
 		};
+		47A93A9C284E18F100B62520 /* LoaderView */ = {
+			isa = PBXGroup;
+			children = (
+				47A93A9D284E18F100B62520 /* LoaderView.swift */,
+			);
+			path = LoaderView;
+			sourceTree = "<group>";
+		};
 		47BF192527C4F89D00D72223 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,6 +374,7 @@
 		47E8C34A27BC1AB3005E2315 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				47A93A98284E094500B62520 /* BaseViewModel.swift */,
 				47BF192527C4F89D00D72223 /* Repository */,
 				4740922027BE48E200BD5BF4 /* Database */,
 				47E8C34B27BC1ABA005E2315 /* Network */,
@@ -382,6 +397,7 @@
 			isa = PBXGroup;
 			children = (
 				88D4111527BF954400B566A1 /* Strings.swift */,
+				47A93A9A284E120D00B62520 /* AppColors.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -397,6 +413,7 @@
 		88FE163827CF970900EFE83D /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				47A93A9C284E18F100B62520 /* LoaderView */,
 				88FE163927CF974100EFE83D /* CustomNavBar */,
 			);
 			path = Components;
@@ -686,6 +703,7 @@
 				47BF192827C4F96E00D72223 /* BaseAlamofireProtocols.swift in Sources */,
 				88FE164027CF974100EFE83D /* CustomNavBarContainerView.swift in Sources */,
 				47E8C34027BC19A7005E2315 /* AppDelegate.swift in Sources */,
+				47A93A99284E094500B62520 /* BaseViewModel.swift in Sources */,
 				4740922727BE49CA00BD5BF4 /* User.swift in Sources */,
 				4740921727BD5D3700BD5BF4 /* Envoirnment.swift in Sources */,
 				88FE164327CF974100EFE83D /* CustomNavLink.swift in Sources */,
@@ -695,12 +713,14 @@
 				88D4111627BF954500B566A1 /* Strings.swift in Sources */,
 				4756C1A727BBD4D2005350E7 /* SwiftUIBootstrapApp.swift in Sources */,
 				88FE164527CF974100EFE83D /* CustomNavBarPreferenceKeys.swift in Sources */,
+				47A93A9E284E18F100B62520 /* LoaderView.swift in Sources */,
 				4740920D27BD016900BD5BF4 /* AlamofireServiceProvider.swift in Sources */,
 				88FE164127CF974100EFE83D /* CustomNavView.swift in Sources */,
 				4740922627BE49CA00BD5BF4 /* UserResponse.swift in Sources */,
 				88FE164427CF974100EFE83D /* CustomNavBarView.swift in Sources */,
 				4740921C27BD64FC00BD5BF4 /* RealmContextManager.swift in Sources */,
 				4740921E27BE48B800BD5BF4 /* StringExtensions.swift in Sources */,
+				47A93A9B284E120D00B62520 /* AppColors.swift in Sources */,
 				4740921527BD3ADD00BD5BF4 /* BaseStorageProtocols.swift in Sources */,
 				4740920F27BD390B00BD5BF4 /* LoginService.swift in Sources */,
 			);
@@ -793,7 +813,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -848,7 +868,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -876,7 +896,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -908,7 +928,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
