@@ -3,13 +3,10 @@
 import SwiftUI
 
 struct AppNavBarView: View {
-    
     var body: some View {
-        
         CustomNavView {
             ZStack {
                 Color.green.ignoresSafeArea()
-                
                 CustomNavLink(destination:
                                 Text("Destination")
                                 .customNavigationTitle("Second Screen")
@@ -35,12 +32,10 @@ struct AppNavBarView_Previews: PreviewProvider {
 }
 
 extension AppNavBarView {
-    
     private var defaultNavView: some View {
         NavigationView {
             ZStack {
                 Color.green.ignoresSafeArea()
-                
                 NavigationLink(
                     destination:
                         Text("Destination")
@@ -50,7 +45,6 @@ extension AppNavBarView {
                     label: {
                         Text("Navigate")
                     })
-                
             }
             .navigationTitle("Nav title here")
         }

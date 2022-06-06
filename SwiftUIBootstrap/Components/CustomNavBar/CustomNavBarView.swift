@@ -3,14 +3,11 @@
 import SwiftUI
 
 struct CustomNavBarView: View {
-    
     @Environment(\.presentationMode) var presentationMode
     let showBackButton: Bool
     let title: String
     let subtitle: String?
-    
     var body: some View {
-        
             HStack {
                 if showBackButton {
                     backButton
@@ -34,7 +31,6 @@ struct CustomNavBarView: View {
 }
 
 extension CustomNavBarView {
-    
     private var backButton: some View {
         Button(action: {
             presentationMode.wrappedValue.dismiss()
@@ -42,7 +38,6 @@ extension CustomNavBarView {
             Image(systemName: "chevron.left")
         })
     }
-    
     private var titleSection: some View {
         VStack(spacing: 4) {
             Text(title)
@@ -53,14 +48,12 @@ extension CustomNavBarView {
             }
         }
     }
-    
     private var logo: some View {
         Text("logo")
             .font(.title)
             .frame(height: 100)
             .foregroundColor(.white)
     }
-    
     private var buttonsView: some View {
         Text("button content")
             .foregroundColor(.white)

@@ -31,16 +31,7 @@ struct LoginView: View {
                         .padding(20)
                         Button(action: {
                             self.action = 1
-                        }, label: {
-                            NavigationLink(destination: TabbarView(defaultView: .constant(1)).navigationBarBackButtonHidden(true), tag: 1, selection: $action) {
-                                Text(Strings.Button.forgotPassword)
-                            }
-                        })
-                        NavigationLink(destination:
-                                        TabbarView(defaultView: .constant(1)),
-                                       isActive: self.$loginViewModel.isLogin) {
-                            EmptyView()
-                        }.hidden()
+                        }, label: { })
                     }
                     .padding(50)
                     .frame(maxWidth: 500, alignment: .center)
@@ -68,7 +59,6 @@ struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         if #available(iOS 15.0, *) {
             LoginView()
-                .previewInterfaceOrientation(.landscapeLeft)
         } else {
             // Fallback on earlier versions
         }

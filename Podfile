@@ -5,7 +5,7 @@ use_frameworks!
 inhibit_all_warnings!
 def shared_pods
   pod 'Alamofire', '5.5.0'
-  pod 'RealmSwift', '10.22.0'
+  pod 'RealmSwift', '10.25.2'
   pod 'SwiftLint' , '0.46.3'
 end
 

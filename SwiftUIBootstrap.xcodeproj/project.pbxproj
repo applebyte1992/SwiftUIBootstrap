@@ -41,11 +41,6 @@
 		53FE863E75080A35FDD81E4D /* Pods_SwiftUIBootstrapTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D31D68837B0AB172E9D0206 /* Pods_SwiftUIBootstrapTests.framework */; };
 		75EC5A44FC8225F7C89AA42C /* Pods_SwiftUIBootstrap_SwiftUIBootstrapUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E31B0EA1ACD04D0CC9ABE9 /* Pods_SwiftUIBootstrap_SwiftUIBootstrapUITests.framework */; };
 		88D4111627BF954500B566A1 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4111527BF954400B566A1 /* Strings.swift */; };
-		88D4113427BFF85300B566A1 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4112B27BFF85300B566A1 /* ScheduleView.swift */; };
-		88D4113527BFF85300B566A1 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4112D27BFF85300B566A1 /* AccountView.swift */; };
-		88D4113627BFF85300B566A1 /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4112F27BFF85300B566A1 /* TabbarView.swift */; };
-		88D4113727BFF85300B566A1 /* ApprovedEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4113127BFF85300B566A1 /* ApprovedEmailView.swift */; };
-		88D4113827BFF85300B566A1 /* OrganizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4113327BFF85300B566A1 /* OrganizationView.swift */; };
 		88D4113B27C36C9400B566A1 /* HiddenNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4113A27C36C9400B566A1 /* HiddenNavigationBar.swift */; };
 		88FE164027CF974100EFE83D /* CustomNavBarContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FE163A27CF974100EFE83D /* CustomNavBarContainerView.swift */; };
 		88FE164127CF974100EFE83D /* CustomNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FE163B27CF974100EFE83D /* CustomNavView.swift */; };
@@ -112,11 +107,6 @@
 		47E8C34827BC1AAB005E2315 /* BaseNetworkProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNetworkProtocols.swift; sourceTree = "<group>"; };
 		73E31B0EA1ACD04D0CC9ABE9 /* Pods_SwiftUIBootstrap_SwiftUIBootstrapUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftUIBootstrap_SwiftUIBootstrapUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D4111527BF954400B566A1 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
-		88D4112B27BFF85300B566A1 /* ScheduleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
-		88D4112D27BFF85300B566A1 /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
-		88D4112F27BFF85300B566A1 /* TabbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
-		88D4113127BFF85300B566A1 /* ApprovedEmailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApprovedEmailView.swift; sourceTree = "<group>"; };
-		88D4113327BFF85300B566A1 /* OrganizationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationView.swift; sourceTree = "<group>"; };
 		88D4113A27C36C9400B566A1 /* HiddenNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenNavigationBar.swift; sourceTree = "<group>"; };
 		88E5AC6B2820685FE3D6404C /* Pods-SwiftUIBootstrap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUIBootstrap.release.xcconfig"; path = "Target Support Files/Pods-SwiftUIBootstrap/Pods-SwiftUIBootstrap.release.xcconfig"; sourceTree = "<group>"; };
 		88FE163A27CF974100EFE83D /* CustomNavBarContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavBarContainerView.swift; sourceTree = "<group>"; };
@@ -325,11 +315,6 @@
 		47E8C33B27BC1536005E2315 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				88D4112C27BFF85300B566A1 /* Account */,
-				88D4113027BFF85300B566A1 /* ApprovedEmail */,
-				88D4113227BFF85300B566A1 /* Organization */,
-				88D4112927BFF85200B566A1 /* Schdedule */,
-				88D4112E27BFF85300B566A1 /* Tabbar */,
 				47E8C33C27BC1575005E2315 /* Login */,
 			);
 			path = Modules;
@@ -399,54 +384,6 @@
 				88D4111527BF954400B566A1 /* Strings.swift */,
 			);
 			path = Constants;
-			sourceTree = "<group>";
-		};
-		88D4112927BFF85200B566A1 /* Schdedule */ = {
-			isa = PBXGroup;
-			children = (
-				88D4112A27BFF85300B566A1 /* View */,
-			);
-			path = Schdedule;
-			sourceTree = "<group>";
-		};
-		88D4112A27BFF85300B566A1 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				88D4112B27BFF85300B566A1 /* ScheduleView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		88D4112C27BFF85300B566A1 /* Account */ = {
-			isa = PBXGroup;
-			children = (
-				88D4112D27BFF85300B566A1 /* AccountView.swift */,
-			);
-			path = Account;
-			sourceTree = "<group>";
-		};
-		88D4112E27BFF85300B566A1 /* Tabbar */ = {
-			isa = PBXGroup;
-			children = (
-				88D4112F27BFF85300B566A1 /* TabbarView.swift */,
-			);
-			path = Tabbar;
-			sourceTree = "<group>";
-		};
-		88D4113027BFF85300B566A1 /* ApprovedEmail */ = {
-			isa = PBXGroup;
-			children = (
-				88D4113127BFF85300B566A1 /* ApprovedEmailView.swift */,
-			);
-			path = ApprovedEmail;
-			sourceTree = "<group>";
-		};
-		88D4113227BFF85300B566A1 /* Organization */ = {
-			isa = PBXGroup;
-			children = (
-				88D4113327BFF85300B566A1 /* OrganizationView.swift */,
-			);
-			path = Organization;
 			sourceTree = "<group>";
 		};
 		88D4113927C36C4100B566A1 /* CustomViewModifiers */ = {
@@ -747,16 +684,11 @@
 				4740922227BE48FD00BD5BF4 /* NetworkError.swift in Sources */,
 				47E8C34327BC1A23005E2315 /* LoginViewModel.swift in Sources */,
 				47BF192827C4F96E00D72223 /* BaseAlamofireProtocols.swift in Sources */,
-				88D4113627BFF85300B566A1 /* TabbarView.swift in Sources */,
 				88FE164027CF974100EFE83D /* CustomNavBarContainerView.swift in Sources */,
-				88D4113427BFF85300B566A1 /* ScheduleView.swift in Sources */,
-				88D4113827BFF85300B566A1 /* OrganizationView.swift in Sources */,
-				88D4113727BFF85300B566A1 /* ApprovedEmailView.swift in Sources */,
 				47E8C34027BC19A7005E2315 /* AppDelegate.swift in Sources */,
 				4740922727BE49CA00BD5BF4 /* User.swift in Sources */,
 				4740921727BD5D3700BD5BF4 /* Envoirnment.swift in Sources */,
 				88FE164327CF974100EFE83D /* CustomNavLink.swift in Sources */,
-				88D4113527BFF85300B566A1 /* AccountView.swift in Sources */,
 				47E8C34927BC1AAB005E2315 /* BaseNetworkProtocols.swift in Sources */,
 				472EBE4B27BFDD2E007C136B /* AppErrors.swift in Sources */,
 				47E8C33E27BC1597005E2315 /* LoginView.swift in Sources */,
