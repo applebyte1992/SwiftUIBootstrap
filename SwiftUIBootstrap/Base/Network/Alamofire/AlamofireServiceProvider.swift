@@ -26,7 +26,7 @@ class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
     }
     func fetch<T>(_ target: Target) async throws -> T where T: Decodable, T: Encodable {
         guard let url = target.endPoint else {
-            throw AppError.buildNetworkError(networkError: NetworkError.init(message: GeneralNetworkError.invalidURL))
+            throw AppError.buildNetworkError(networkError: NetworkError.init(message: GeneralError.invalidURL))
         }
         // Paramters
         let params: Parameters? = target.parameters
@@ -48,10 +48,20 @@ class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
             httpHeaders = HTTPHeaders(headers)
         }
         do {
-            return try await manager.request(url, method: method, parameters: params, encoding: encoding, headers: httpHeaders, interceptor: requestInterceptor)
-            .serializingDecodable(T.self , emptyResponseCodes: [200, 204, 205])
-            .value
+            let dataResponse = try await manager.request(url, method: method, parameters: params, encoding: encoding, headers: httpHeaders, interceptor: requestInterceptor)
+                .validate(NetworkError.validator)
+                .serializingData(emptyResponseCodes: [200])
+                .value
+            if let parseResponse = dataResponse.decode(type: T.self) {
+                return parseResponse
+            } else {
+                let jsonString = String(data: dataResponse, encoding: .utf8)
+                return T.decode(data: SuccesssResponse(response: jsonString).toData())!
+            }
         } catch let exception as AFError {
+            if case .responseValidationFailed(.customValidationFailed(let error)) = exception {
+                throw error
+            }
             throw AppError.buildNetworkError(networkError: NetworkError.init(alamofireError: exception))
         }
     }

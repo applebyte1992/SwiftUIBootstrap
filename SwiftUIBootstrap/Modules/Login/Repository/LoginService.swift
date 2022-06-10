@@ -12,7 +12,7 @@ import Combine
 /// Defines the endpoints available for the Authentication API
 enum LoginService {
     /// Endpoint for the API:
-    case authenticate
+    case authenticate(LoginRequest)
 }
 
 /// Implementation of the Endpoint protocol for Token Service
@@ -21,23 +21,26 @@ extension LoginService: AlamofireEndpoint {
         return nil
     }
     var parameters: Params? {
-       return nil
+        switch self {
+        case .authenticate(let loginRequest):
+            return loginRequest.encode()
+        }
     }
     var server: BaseServerInfo {
         return LoginServer()
     }
     var path: String {
         switch self {
-        case .authenticate: return "/users/2"
+        case .authenticate: return "/authaccount/login"
         }
     }
     var httpMethod: String {
-        return String.HTTPGet
+        return String.HTTPPost
     }
     // We can also use request adpater to add authorization headers
     // Request Adpater adds headers in existing
     var encoding: ParameterEncoding {
-        return URLEncoding.default
+        return JSONEncoding.default
     }
     // Default Headers is ["Content-type": "application/json"]
     public var headers: Headers? {
@@ -46,7 +49,7 @@ extension LoginService: AlamofireEndpoint {
 }
 
 protocol LoginServiceClientProtocol: BaseNetworkServiceClient {
-    func loginService() async throws -> UserResponse
+    func loginService(request: LoginRequest) async throws -> UserResponse
 }
 
 /// API Client for the Authentication API
@@ -54,8 +57,8 @@ class LoginServiceClient: AlamofireProvider<LoginService>,LoginServiceClientProt
     init() {
         super.init()
     }
-    func loginService() async throws -> UserResponse {
-        return try await super.fetch(.authenticate)
+    func loginService(request: LoginRequest) async throws -> UserResponse {
+        return try await super.fetch(.authenticate(request))
     }
 
 }

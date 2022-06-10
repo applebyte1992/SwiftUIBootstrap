@@ -21,8 +21,8 @@ class LoginStorageTest: XCTestCase {
         realmContext = RealmContextManager(realm: try? Realm())
         let userStorage = UserStorage(storage: realmContext)
         try? userStorage.saveUserInformation(user: User.mock)
-        let user = userStorage.getUserInformation(userId: 102)!
-        XCTAssertTrue(user.id == 102 && user.firstName == "Masroor" && user.lastName == "Elahi")
+        let user = userStorage.getUserInformation(userId: 126298)!
+        XCTAssertTrue(user.id == 126298 && user.name == "Developer" && user.email == "masroor@gmail.com" && user.token == "8758308d-daa2-4d47-bea7-cacdde87b948")
     }
     func testUserNotFound() {
         realmContext = RealmContextManager(realm: try? Realm())

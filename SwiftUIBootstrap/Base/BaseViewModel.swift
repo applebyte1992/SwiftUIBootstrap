@@ -20,7 +20,7 @@ enum ViewModelStates: Equatable {
             return false
         }
     }
-    case error(Error)
+    case error(AppError)
     case loading
     case loaded
 }

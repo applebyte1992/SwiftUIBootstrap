@@ -10,22 +10,22 @@ import Combine
 import RealmSwift
 
 protocol LoginRepositoryInputProtocol {
-    func loginUser() async throws -> User
+    func loginUser(email: String, password: String) async throws -> User
 }
 class LoginRepository<N: LoginServiceClientProtocol,S: LoginStorageProtocol>: BaseRepositoryStorage<S,N>,LoginRepositoryInputProtocol {
 
-    func loginUser() async throws -> User {
+    func loginUser(email: String, password: String) async throws -> User {
         do {
-            guard let user = try await self.client.loginService().user else {
-                throw AppError.buildNilDataError
+            guard let response = try await self.client.loginService(request: LoginRequest.init(email: email, password: password)).user else {
+                throw AppError.init(dataError: GeneralError.invalidCredentials)
             }
-            return try await self.saveUserInformation(user: user)
+            return try await self.saveUserInformation(user: response)
         }
     }
     @MainActor
     private func saveUserInformation(user: User)throws -> User {
         try self.storage.saveUserInformation(user: user)
-        guard let savedUser = self.storage.getUserInformation(userId: user.id ?? 0) else {
+        guard let savedUser = self.storage.getUserInformation(userId: user.id ) else {
             fatalError("User information not returned from Database")
         }
         return savedUser

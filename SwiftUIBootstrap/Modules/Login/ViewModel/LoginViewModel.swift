@@ -27,7 +27,7 @@ class LoginViewModel: BaseViewModelClass {
         Task {
             do {
                 await self.updateUIState(state: .loading)
-                let user = try await self.loginRepo.loginUser()
+                let user = try await self.loginRepo.loginUser(email: username, password: password)
                 await self.updateUIState(state: .loaded)
                 print(user)
             } catch let error as AppError {
