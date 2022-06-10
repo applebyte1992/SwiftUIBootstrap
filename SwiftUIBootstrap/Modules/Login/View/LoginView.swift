@@ -13,45 +13,66 @@ struct LoginView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color.yellow
+                LinearGradient(gradient: Gradient(colors: [AppColors.gradientStartColor, AppColors.gradientEndColor]), startPoint: .top, endPoint: .bottom)
+                    .ignoresSafeArea()
                 // logo..
-                VStack(spacing: 40) {
+                VStack(spacing: 20) {
                     VStack {
-                        Text(Strings.SignIn.title)
-                            .font(.largeTitle)
-                        Text(Strings.SignIn.subtitle)
-                            .font(.title2)
+                        // Headings
+                        getText(text: Strings.SignIn.title, font: .title)
+                        getText(text: Strings.SignIn.subtitle, font: .subheadline)
+                        // Feilds
                         TextField(Strings.SignIn.emailAddress, text: $loginViewModel.username)
                             .keyboardType(.emailAddress)
+                            .padding(.horizontal, 8)
+                            .padding(.top , 8)
                         SecureField(Strings.SignIn.password, text: $loginViewModel.password)
-                        Button(Strings.Button.login) {
-                            loginViewModel.login()
+                            .padding(.horizontal, 8)
+                            .padding(.top , 8)
+                        // Errors
+                        if case let ViewModelStates.error(err) = loginViewModel.viewState {
+                            getText(text: err.localizedDescription, font: .callout)
+                                .foregroundColor(.red)
                         }
-                        .disabled(!loginViewModel.isValid)
-                        .padding(20)
-                        Button(action: {
-                            self.action = 1
-                        }, label: { })
+                        // Actions
+                        self.getActions(title: Strings.Button.login, action: self.actLogin)
+                            .disabled(!loginViewModel.isValid)
+                        self.getActions(title: Strings.SignIn.forgotPassword, action: self.navigateToForgotPassword)
                     }
-                    .padding(50)
-                    .frame(maxWidth: 500, alignment: .center)
                     .background(Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 1)
+                    .padding(.horizontal,10)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .autocapitalization(.none)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                .background(Color.yellow)
-            }
-            .onAppear {
-                print("View Loaded")
+                // Loader
+                if loginViewModel.viewState == .loading {
+                    LoaderView(message: "Loading")
+                }
             }
             .onDisappear {
-                print("View Unloaded")
                 loginViewModel.dispose()
             }
             .hiddenNavigationBarStyle()
         }
+    }
+    func getText(text: String , font: Font) -> some View {
+        return Text(text)
+            .font(font)
+            .padding(.top,5)
+            .multilineTextAlignment(.center)
+    }
+    func getActions(title: String , action : @escaping() -> Void) -> some View {
+        return Button(title) {
+            action()
+        }
+        .padding(20)
+    }
+    private func actLogin() {
+        loginViewModel.login()
+    }
+    private func navigateToForgotPassword() {
     }
 }
 

@@ -1,40 +1,42 @@
+//
+//  User.swift
+//  SwiftUIBootstrap
+//
+//  Created by Masroor Elahi on 17/02/2022.
+//
 import Foundation
 import RealmSwift
 
-class User: Object,Codable {
-    @Persisted var id: Int?
-    @Persisted var email: String?
-    @Persisted var firstName: String?
-    @Persisted var lastName: String?
-    @Persisted var  avatar: String?
-
-	enum CodingKeys: String, CodingKey {
-		case id
-		case email
-		case firstName = "first_name"
-		case lastName = "last_name"
-		case avatar
-	}
+@objcMembers class User: Object, Codable {
+    dynamic var id: Int = 0
+    dynamic var name: String?
+    dynamic var email: String?
+    dynamic var token: String?
     override init() { }
-
+    enum CodingKeys: String, CodingKey {
+        case id = "Id"
+        case name = "Name"
+        case email = "Email"
+        case token = "Token"
+    }
     required init(from decoder: Decoder) throws {
-		let values = try decoder.container(keyedBy: CodingKeys.self)
-		id = try values.decodeIfPresent(Int.self, forKey: .id)
-		email = try values.decodeIfPresent(String.self, forKey: .email)
-		firstName = try values.decodeIfPresent(String.self, forKey: .firstName)
-		lastName = try values.decodeIfPresent(String.self, forKey: .lastName)
-		avatar = try values.decodeIfPresent(String.self, forKey: .avatar)
-	}
-
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decode(Int.self, forKey: .id)
+        name = try values.decodeIfPresent(String.self, forKey: .name)
+        email = try values.decodeIfPresent(String.self, forKey: .email)
+        token = try values.decodeIfPresent(String.self, forKey: .token)
+    }
 }
 extension User {
     static var mock: User {
-        let user = User()
-        user.id = 102
-        user.email = "masroor@gmail.com"
-        user.firstName = "Masroor"
-        user.lastName = "Elahi"
-        user.avatar = "blank:page"
-        return user
+        return
+            """
+            {
+                "Id": 126298,
+                "Name": "Developer",
+                "Email": "masroor@gmail.com",
+                "Token": "8758308d-daa2-4d47-bea7-cacdde87b948"
+            }
+            """.toObject(type: User.self)!
     }
 }

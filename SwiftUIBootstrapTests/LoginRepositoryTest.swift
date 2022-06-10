@@ -7,33 +7,51 @@
 
 import XCTest
 import Combine
+import RealmSwift
 
 @testable import SwiftUIBootstrap
 
 class LoginRepositoryTest: XCTestCase {
     var repo: LoginRepositoryInputProtocol!
-    var subscriptions: Set<AnyCancellable> = []
     override func setUp() {
+        Realm.Configuration.defaultConfiguration.inMemoryIdentifier = self.name
         super.setUp()
-        subscriptions = []
     }
-    func testLoginRepoUserInformationSuccess() {
+    func testLoginRepoUserInformationSuccess() async {
+        self.repo = LoginRepository(client: MockLoginClient(), storage: MockLoginStorage())
+        let mockUser = LoginRequest.mockSuccess
+        do {
+            let response = try await self.repo.loginUser(email: mockUser.email, password: mockUser.password)
+            XCTAssertTrue(response.id == UserResponse.mock.user?.id)
+        } catch {
+            XCTFail("Failed login success test")
+        }
     }
-
+    func testLoginRepoUserInformationFailure() async {
+        self.repo = LoginRepository(client: MockLoginClient(), storage: MockLoginStorage())
+        let mockUser = LoginRequest.mockFailed
+        do {
+            _ = try await self.repo.loginUser(email: mockUser.email, password: mockUser.password)
+            XCTFail("Response returned on wrong credentials")
+        } catch {
+            XCTAssert(true, "Exception received on wrong credentials")
+        }
+    }
 }
 
-class  MockLoginClient: LoginServiceClientProtocol {
-    func loginService() async throws -> UserResponse {
-        return UserResponse.mock
+class MockLoginClient: LoginServiceClientProtocol {
+    func loginService(request: LoginRequest) async throws -> UserResponse {
+        if request.email == LoginRequest.mockSuccess.email && request.password == LoginRequest.mockSuccess.password { return UserResponse.mock }
+        throw AppError.init(dataError: GeneralError.invalidCredentials)
     }
-    var isError: Bool = false
 }
 
 class MockLoginStorage: LoginStorageProtocol {
-    func saveUserInformation(user: User) throws {
-        print("Tesing call \(user.firstName ?? "")")
+    var user: SwiftUIBootstrap.User!
+    func saveUserInformation(user: SwiftUIBootstrap.User) throws {
+        self.user = user
     }
-    func getUserInformation(userId: Int) -> User? {
-        return User.mock
+    func getUserInformation(userId: Int) -> SwiftUIBootstrap.User? {
+        return user
     }
 }

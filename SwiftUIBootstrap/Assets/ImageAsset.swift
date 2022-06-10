@@ -3,15 +3,12 @@
 import UIKit
 
 enum RawImageAsset: String, CaseIterable {
-    
-    case home = "home"
-    case profile = "profile"
-    case favourite = "favourite"
-    
+    case home
+    case profile
+    case favourite
     func load() -> UIImage? {
         return UIImage(named: self.rawValue)
     }
-    
 }
 
 struct ImageAsset {

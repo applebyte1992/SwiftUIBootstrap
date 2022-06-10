@@ -12,6 +12,6 @@ class LoginServer: BaseServerInfo {
         return ""
     }
     var baseURL: String {
-        return "https://reqres.in/api"
+        return "http://restapi.adequateshop.com/api"
     }
 }
