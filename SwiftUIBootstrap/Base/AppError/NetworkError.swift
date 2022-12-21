@@ -25,18 +25,32 @@ struct NetworkError: Codable , Error {
         self.code = "\(generalNetworkErrorCode)"
         self.message = message.localizedDescription
     }
+    init(error: Error) {
+        let nserror = error as NSError
+        self.code = nserror.code.description
+        self.message = nserror.localizedDescription
+        self.requestURL = nil
+    }
     private init(errorCode: String? = nil, errorMessage: String? = nil, requestURL: String? = nil) {
         self.code = errorCode
         self.message = errorMessage
         self.requestURL = requestURL
     }
+    /// Custom Error Parser
+    /// - Parameters:
+    ///   - data: Data of error coming from api
+    ///   - code: Code of the api response
+    ///   - message: Message of the error
+    /// - Returns: App Error object returned
     static func getError(_ data: Data? , _ code: Int , _ message: String = "" ) -> AppError {
-        if let err = data?.decode(type: NetworkError.self) {
-            return AppError.buildNetworkError(networkError: err)
-        } else if let responseData = data , !responseData.isEmpty {
-            return AppError.buildNetworkError(networkError: NetworkError(errorCode: "\(code)", errorMessage: String.init(data: responseData, encoding: .utf8), requestURL: nil))
-        } else {
-            return AppError.buildNetworkError(networkError: NetworkError(errorCode: "\(code)", errorMessage: message, requestURL: nil))
+        do {
+            if let err = try data?.decode(type: NetworkError.self) {
+                return AppError.buildNetworkError(networkError: err)
+            } else {
+                return AppError.buildNetworkError(networkError: NetworkError(errorCode: "\(code)", errorMessage: message, requestURL: nil))
+            }
+        } catch let error {
+            return AppError.buildNetworkError(networkError: NetworkError.init(error: error))
         }
     }
     var isErrorValid: Bool {
@@ -46,71 +60,73 @@ struct NetworkError: Codable , Error {
 
 extension NetworkError {
     public static let validator: DataRequest.Validation = { request, response, data in
+        showRequestDetail(request: request, response: response, data: data)
         switch response.statusCode {
         case 403:
-            showRequestDetailForFailure(request: request, reponse: response, data: data)
             return .failure(NetworkError.getError(data , response.statusCode , GeneralError.generalAuthError.localizedDescription))
         case 400..<402, 404..<499:
-            showRequestDetailForFailure(request: request, reponse: response, data: data)
             return .failure(NetworkError.getError(data , response.statusCode , GeneralError.somethingWentWrong.localizedDescription))
         case 500..<599:
-            showRequestDetailForFailure(request: request, reponse: response, data: data)
             return .failure(NetworkError.getError(data , response.statusCode , GeneralError.somethingWentWrong.localizedDescription))
         case 200..<399:
                 return .success(())
         default:
-            showRequestDetailForSuccess(request: request, reponse: response, data: data)
             return .success(())
         }
     }
-    static func showRequestDetailForSuccess(request: URLRequest?, reponse: HTTPURLResponse, data: Data?) {
-        DispatchQueue.global(qos: .background).async {
-            var logString: String = ""
-            logString = "\n\n\n✅✅✅ ------- Success Response Start ------- ✅✅✅ \n"
-            logString += ""+(reponse.url?.absoluteString ?? "")
-            logString += "\n=========   allHTTPHeaderFields   ========== \n"
-            logString += "\(request?.allHTTPHeaderFields ?? [:])"
-            logString += "\n=========   HTTP Status code   ========== \n"
-            logString += "\(reponse.statusCode)"
-            if let bodyData: Data = request?.httpBody {
-                let bodyString = String(data: bodyData, encoding: String.Encoding.utf8)
-                logString += "\n=========   Request httpBody   ========== \n" + (bodyString ?? "")
-            } else {
-                logString += "\n=========   Request httpBody   ========== \n" + "Found Request Body Nil"
+    static func showRequestDetail(request: URLRequest?, response: HTTPURLResponse, data: Data?) { // swiftlint:disable:this function_body_length
+         let responseCode = response.statusCode
+        switch responseCode {
+        case 200..<399:
+            DispatchQueue.global(qos: .background).async {
+                var logString: String = ""
+                logString = "\n\n\n✅✅✅ ------- Success Response Start ------- ✅✅✅ \n"
+                logString += ""+(response.url?.absoluteString ?? "")
+                logString += "\n=========   allHTTPHeaderFields   ========== \n"
+                logString += "\(request?.allHTTPHeaderFields ?? [:])"
+                logString += "\n=========   HTTP Status code   ========== \n"
+                logString += "\(response.statusCode)"
+                if let bodyData: Data = request?.httpBody {
+                    let bodyString = String(data: bodyData, encoding: String.Encoding.utf8)
+                    logString += "\n=========   Request httpBody   ========== \n" + (bodyString ?? "")
+                } else {
+                    logString += "\n=========   Request httpBody   ========== \n" + "Found Request Body Nil"
+                }
+                if let responseData: Data = data {
+                    let responseString = String(data: responseData, encoding: String.Encoding.utf8)
+                    logString += "\n=========   Response Body   ========== \n" + (responseString ?? "")
+                } else {
+                    logString += "\n=========   Response Body   ========== \n" + "Found Response Body Nil"
+                }
+                logString += "\n✅✅✅ ------- Success Response End ------- ✅✅✅ \n\n\n"
+                print(logString)
             }
-            if let responseData: Data = data {
-                let responseString = String(data: responseData, encoding: String.Encoding.utf8)
-                logString += "\n=========   Response Body   ========== \n" + (responseString ?? "")
-            } else {
-                logString += "\n=========   Response Body   ========== \n" + "Found Response Body Nil"
+        case 400..<599:
+            DispatchQueue.global(qos: .background).async {
+                var logString: String = ""
+                logString = "\n\n\n❌❌❌❌ ------- Failure Response Start ------- ❌❌❌❌\n"
+                logString += ""+(response.url?.absoluteString ?? "")
+                logString += "\n=========   allHTTPHeaderFields   ========== \n"
+                logString += "\(request?.allHTTPHeaderFields ?? [:])"
+                logString += "\n=========   HTTP Status code   ========== \n"
+                logString += "\(response.statusCode)"
+                if let bodyData: Data = request?.httpBody {
+                    let bodyString = String(data: bodyData, encoding: String.Encoding.utf8)
+                    logString += "\n=========   Request httpBody   ========== \n" + (bodyString ?? "")
+                } else {
+                    logString += "\n=========   Request httpBody   ========== \n" + "Found Request Body Nil"
+                }
+                if let responseData: Data = data {
+                    let responseString = String(data: responseData, encoding: String.Encoding.utf8)
+                    logString += "\n=========   Response Body   ========== \n" + (responseString ?? "")
+                } else {
+                    logString += "\n=========   Response Body   ========== \n" + "Found Response Body Nil"
+                }
+                logString += "\n❌❌❌❌ ------- Failure Response End ------- ❌❌❌❌\n\n\n"
+                print(logString)
             }
-            logString += "\n✅✅✅ ------- Success Response End ------- ✅✅✅ \n\n\n"
-            print(logString)
-        }
-    }
-    static func showRequestDetailForFailure(request: URLRequest?, reponse: HTTPURLResponse, data: Data?) {
-        DispatchQueue.global(qos: .background).async {
-            var logString: String = ""
-            logString = "\n\n\n❌❌❌❌ ------- Failure Response Start ------- ❌❌❌❌\n"
-            logString += ""+(reponse.url?.absoluteString ?? "")
-            logString += "\n=========   allHTTPHeaderFields   ========== \n"
-            logString += "\(request?.allHTTPHeaderFields ?? [:])"
-            logString += "\n=========   HTTP Status code   ========== \n"
-            logString += "\(reponse.statusCode)"
-            if let bodyData: Data = request?.httpBody {
-                let bodyString = String(data: bodyData, encoding: String.Encoding.utf8)
-                logString += "\n=========   Request httpBody   ========== \n" + (bodyString ?? "")
-            } else {
-                logString += "\n=========   Request httpBody   ========== \n" + "Found Request Body Nil"
-            }
-            if let responseData: Data = data {
-                let responseString = String(data: responseData, encoding: String.Encoding.utf8)
-                logString += "\n=========   Response Body   ========== \n" + (responseString ?? "")
-            } else {
-                logString += "\n=========   Response Body   ========== \n" + "Found Response Body Nil"
-            }
-            logString += "\n❌❌❌❌ ------- Failure Response End ------- ❌❌❌❌\n\n\n"
-            print(logString)
+        default:
+            break
         }
     }
 }

@@ -7,14 +7,14 @@
 
 import Foundation
 extension Data {
-    func decode<T: Decodable>(type: T.Type, enableLog: Bool = true) -> T? {
+    func decode<T: Decodable>(type: T.Type, enableLog: Bool = true) throws -> T {
         do {
             return try JSONDecoder().decode(type, from: self)
         } catch let error {
             if enableLog {
                 debugPrint(error)
             }
-            return nil
+            throw error
         }
     }
 }

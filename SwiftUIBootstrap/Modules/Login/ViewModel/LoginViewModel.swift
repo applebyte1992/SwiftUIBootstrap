@@ -26,17 +26,14 @@ class LoginViewModel: BaseViewModelClass {
     func login() {
         Task {
             do {
-                await self.updateUIState(state: .loading)
+                await self.updateState(state: .loading)
                 let user = try await self.loginRepo.loginUser(email: username, password: password)
-                await self.updateUIState(state: .loaded)
+                await self.updateState(state: .loading)
                 print(user)
             } catch let error as AppError {
-                await self.updateUIState(state: .error(error))
+                await self.handleError(error: error)
             }
         }
-    }
-    @MainActor func updateUIState(state: ViewModelStates) {
-        self.viewState = state
     }
     func dispose() {
         self.cancellable.forEach { object in

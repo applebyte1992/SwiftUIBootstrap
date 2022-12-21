@@ -13,31 +13,17 @@ struct LoginView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                LinearGradient(gradient: Gradient(colors: [AppColors.gradientStartColor, AppColors.gradientEndColor]), startPoint: .top, endPoint: .bottom)
+                LinearGradient(gradient: Gradient(colors: [Color._CFDEF3, Color._E0EAFC]), startPoint: .top, endPoint: .bottom)
                     .ignoresSafeArea()
                 // logo..
                 VStack(spacing: 20) {
                     VStack {
                         // Headings
-                        getText(text: Strings.SignIn.title, font: .title)
-                        getText(text: Strings.SignIn.subtitle, font: .subheadline)
+                        getHeader
                         // Feilds
-                        TextField(Strings.SignIn.emailAddress, text: $loginViewModel.username)
-                            .keyboardType(.emailAddress)
-                            .padding(.horizontal, 8)
-                            .padding(.top , 8)
-                        SecureField(Strings.SignIn.password, text: $loginViewModel.password)
-                            .padding(.horizontal, 8)
-                            .padding(.top , 8)
-                        // Errors
-                        if case let ViewModelStates.error(err) = loginViewModel.viewState {
-                            getText(text: err.localizedDescription, font: .callout)
-                                .foregroundColor(.red)
-                        }
+                        getFields
                         // Actions
-                        self.getActions(title: Strings.Button.login, action: self.actLogin)
-                            .disabled(!loginViewModel.isValid)
-                        self.getActions(title: Strings.SignIn.forgotPassword, action: self.navigateToForgotPassword)
+                       getActions
                     }
                     .background(Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
@@ -50,11 +36,36 @@ struct LoginView: View {
                 if loginViewModel.viewState == .loading {
                     LoaderView(message: "Loading")
                 }
-            }
+            }.errorAlert(error: $loginViewModel.error)
             .onDisappear {
                 loginViewModel.dispose()
             }
             .hiddenNavigationBarStyle()
+        }
+    }
+    // MARK: - Controls
+    private var getHeader: some View {
+        Group {
+            getText(text: Strings.SignIn.title, font: .title)
+            getText(text: Strings.SignIn.subtitle, font: .subheadline)
+        }
+    }
+    private var getFields: some View {
+        Group {
+            TextField(Strings.SignIn.emailAddress, text: $loginViewModel.username)
+                .keyboardType(.emailAddress)
+                .padding(.horizontal, 8)
+                .padding(.top , 8)
+            SecureField(Strings.SignIn.password, text: $loginViewModel.password)
+                .padding(.horizontal, 8)
+                .padding(.top , 8)
+        }
+    }
+    private var getActions: some View {
+        Group {
+            self.getActions(title: Strings.Button.login, action: self.actLogin)
+                .disabled(!loginViewModel.isValid)
+            self.getActions(title: Strings.SignIn.forgotPassword, action: self.navigateToForgotPassword)
         }
     }
     func getText(text: String , font: Font) -> some View {

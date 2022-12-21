@@ -37,6 +37,9 @@ extension AppError: LocalizedError {
     public var localizedDescription: String {
         return networkError?.message ?? dataError?.localizedDescription ?? databaseError?.localizedDescription ?? unknownErrorMessage
     }
+    var errorDescription: String? {
+        return "SwiftUI Bootstrap"
+    }
 }
 
 extension AppError {

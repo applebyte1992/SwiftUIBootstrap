@@ -13,6 +13,11 @@ extension String {
     static let HTTPPut = "PUT"
     func toObject<T: Codable>(type: T.Type) -> T? {
         let data = Data(self.utf8)
-        return data.decode(type: type)
+        do {
+            return try data.decode(type: type)
+        } catch let error {
+            debugPrint(error)
+            return nil
+        }
     }
 }

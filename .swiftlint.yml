@@ -6,8 +6,8 @@ excluded: # exclude some directories, such as 3rd Carthage, pods and so on
   - Pods
 
 line_length:
-  warning: 200
-  error: 250
+  warning: 250
+  error: 300
 
 file_length:
   warning: 300

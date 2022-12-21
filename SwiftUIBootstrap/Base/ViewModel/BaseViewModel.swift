@@ -10,8 +10,8 @@ import SwiftUI
 enum ViewModelStates: Equatable {
     static func == (lhs: ViewModelStates, rhs: ViewModelStates) -> Bool {
         switch(lhs,rhs) {
-        case (let .error(lhsString), let .error(rhsString)):
-            return lhsString.localizedDescription == rhsString.localizedDescription
+        case (.error, .error):
+            return true
         case (.loaded, .loaded):
             return true
         case (.loading, .loading):
@@ -20,11 +20,24 @@ enum ViewModelStates: Equatable {
             return false
         }
     }
-    case error(AppError)
+    case error
     case loading
     case loaded
 }
 
 class BaseViewModelClass: ObservableObject {
     @Published var viewState: ViewModelStates = .loaded
+    @Published var error: AppError? {
+        didSet {
+            self.viewState = .error
+        }
+    }
+    @MainActor
+    func updateState(state: ViewModelStates) {
+        self.viewState = state
+    }
+    @MainActor
+    func handleError(error: AppError) {
+        self.error = error
+    }
 }
