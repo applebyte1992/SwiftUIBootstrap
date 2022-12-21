@@ -26,7 +26,7 @@ class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
     }
     func fetch<T>(_ target: Target) async throws -> T where T: Decodable, T: Encodable {
         guard let url = target.endPoint else {
-            throw AppError.buildNetworkError(networkError: NetworkError.init(message: GeneralNetworkError.invalidURL))
+            throw AppError.buildNetworkError(networkError: NetworkError.init(message: GeneralError.invalidURL))
         }
         // Paramters
         let params: Parameters? = target.parameters
@@ -47,11 +47,22 @@ class AlamofireProvider<Target: BaseNetworkEndpoint>: BaseNetworkService {
         if let headers = target.headers {
             httpHeaders = HTTPHeaders(headers)
         }
-        do {
-            return try await manager.request(url, method: method, parameters: params, encoding: encoding, headers: httpHeaders, interceptor: requestInterceptor)
-            .serializingDecodable(T.self , emptyResponseCodes: [200, 204, 205])
-            .value
-        } catch let exception as AFError {
+        let response = await manager.request(url, method: method, parameters: params, encoding: encoding, headers: httpHeaders, interceptor: requestInterceptor)
+            .validate(NetworkError.validator)
+            .serializingData(emptyResponseCodes: [200, 201, 202, 203, 204])
+            .response
+        switch response.result {
+        case .success(let data):
+            do {
+                if data.isEmpty { return SuccesssResponse.init() as! T } // swiftlint:disable:this force_cast
+                return try data.decode(type: T.self)
+            } catch let exception {
+                throw AppError.buildNetworkError(networkError: NetworkError.init(alamofireError: AFError.responseSerializationFailed(reason: AFError.ResponseSerializationFailureReason.decodingFailed(error: exception))))
+            }
+        case .failure(let exception):
+            if case .responseValidationFailed(.customValidationFailed(let error)) = exception {
+                throw error
+            }
             throw AppError.buildNetworkError(networkError: NetworkError.init(alamofireError: exception))
         }
     }

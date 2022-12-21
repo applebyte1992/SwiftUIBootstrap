@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class LoginViewModel: ObservableObject {
+class LoginViewModel: BaseViewModelClass {
     @Published var username = ""
     @Published var password = ""
     @Published var isLogin = false
@@ -17,7 +17,8 @@ class LoginViewModel: ObservableObject {
     private var loginRepo: LoginRepositoryInputProtocol
     init(loginRepo: LoginRepositoryInputProtocol = LoginRepository(client: LoginServiceClient(), storage: UserStorage(storage: RealmContextManager()))) {
         self.loginRepo = loginRepo
-         Publishers.CombineLatest($username, $password)
+        super.init()
+        Publishers.CombineLatest($username, $password)
             .map { $0.count > 0 && $1.count > 0 }
             .assign(to: \.isValid, on: self)
             .store(in: &cancellable)
@@ -25,11 +26,12 @@ class LoginViewModel: ObservableObject {
     func login() {
         Task {
             do {
-                let user = try await self.loginRepo.loginUser()
+                await self.updateState(state: .loading)
+                let user = try await self.loginRepo.loginUser(email: username, password: password)
+                await self.updateState(state: .loading)
                 print(user)
-                self.isLogin = true
             } catch let error as AppError {
-                print(error.message)
+                await self.handleError(error: error)
             }
         }
     }

@@ -2,12 +2,10 @@
 
 import UIKit
 
-enum RawColorAsset:String, CaseIterable {
-    
+enum RawColorAsset: String, CaseIterable {
     case primary
     case secondary
     case appYellow
-    
     func load() -> UIColor? {
         return UIColor(named: self.rawValue)
     }

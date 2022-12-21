@@ -11,58 +11,35 @@ import Alamofire
 
 @testable import SwiftUIBootstrap
 
+let apiResponseTimeout: Double = 60
+
 class LoginServiceAPITest: XCTestCase {
     var subscriptions: Set<AnyCancellable> = []
     override func setUp() {
         super.setUp()
         subscriptions = []
     }
-    func testLoginAPISuccessResponse() {
-    }
-    func testLoginAPIEmptyResponse() {
-    }
-}
-
-// Mock
-
-enum MockLogin {
-    case authenticate
-}
-
-extension MockLogin: AlamofireEndpoint {
-    var requestInterceptor: RequestInterceptor? {
-        return nil
-    }
-    var parameters: Params? {
-       return nil
-    }
-    var server: BaseServerInfo {
-        return LoginServer()
-    }
-    var path: String {
-        switch self {
-        case .authenticate: return "/users/23"
+    func testLoginAPISuccessResponse() async {
+        let loginService: LoginServiceClientProtocol = LoginServiceClient()
+        let expectation = expectation(description: "Login successful")
+        do {
+            let response = try await loginService.loginService(request: LoginRequest.mockSuccess)
+            XCTAssertTrue(response.user != nil && response.code == 0)
+            expectation.fulfill()
+        } catch let error {
+            XCTFail(error.localizedDescription)
         }
+        wait(for: [expectation], timeout: apiResponseTimeout)
     }
-    var httpMethod: String {
-        return String.HTTPGet
-    }
-    // We can also use request adpater to add authorization headers
-    // Request Adpater adds headers in existing
-    var encoding: ParameterEncoding {
-        return URLEncoding.default
-    }
-    // Default Headers is ["Content-type": "application/json"]
-    public var headers: Headers? {
-        return ["Content-type": "application/json"]
-    }
-}
-
-class MockLoginServiceClient: AlamofireProvider<MockLogin>,LoginServiceClientProtocol {
-    func loginService() async throws -> UserResponse {
-        return try await super.fetch(.authenticate)
-    }
-    init() {
-        super.init()
+    func testLoginAPIEmptyResponse() async {
+        let loginService: LoginServiceClientProtocol = LoginServiceClient()
+        let expectation = expectation(description: "Login invalid email or password")
+        let response = try? await loginService.loginService(request: LoginRequest.mockFailed)
+        if response?.user == nil && response?.code != 0 {
+            expectation.fulfill()
+        } else {
+            XCTFail("User returned after login on wrong credentials")
+        }
+        wait(for: [expectation], timeout: apiResponseTimeout)
     }
 }

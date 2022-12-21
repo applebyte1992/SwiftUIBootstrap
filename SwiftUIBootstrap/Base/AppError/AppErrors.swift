@@ -7,26 +7,6 @@
 
 import Foundation
 
-// General Errors
-private let generalStatusForOthers = 9000
-private let unknownErrorMessage = "Unknow Error"
-
-enum GeneralError: Error {
-    case dataIsNil
-    case unknownError(String)
-}
-
-extension GeneralError: LocalizedError {
-    public var localizedDescription: String {
-        switch self {
-        case .dataIsNil:
-            return "Data is nil"
-        case .unknownError(let error):
-            return error
-        }
-    }
-}
-
 struct AppError: Error {
     var networkError: NetworkError?
     var dataError: GeneralError?
@@ -36,7 +16,7 @@ struct AppError: Error {
         self.dataError = nil
         self.databaseError = nil
     }
-    private init(dataError: GeneralError) {
+    init(dataError: GeneralError) {
         self.init()
         self.dataError = dataError
     }
@@ -48,17 +28,26 @@ struct AppError: Error {
         self.init()
         self.databaseError = databaseError
     }
-    var message: String {
+    var code: String {
+        return networkError?.code ?? "\(generalStatusForOthers)"
+    }
+}
+
+extension AppError: LocalizedError {
+    public var localizedDescription: String {
         return networkError?.message ?? dataError?.localizedDescription ?? databaseError?.localizedDescription ?? unknownErrorMessage
     }
-    var code: String {
-        return networkError?.status ?? "\(generalStatusForOthers)"
+    var errorDescription: String? {
+        return "SwiftUI Bootstrap"
     }
 }
 
 extension AppError {
     public static var buildNilDataError: AppError {
         return AppError(dataError: GeneralError.dataIsNil)
+    }
+    public static var somethingWentWrong: AppError {
+        return AppError(dataError: GeneralError.somethingWentWrong)
     }
     static func buildDatabaseError(databaseError: RealmError) -> AppError {
         return AppError(databaseError: databaseError)
